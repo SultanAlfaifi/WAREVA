@@ -6,6 +6,8 @@
 
 الفرق عن محطات السوق ليس في المعالجة، بل في معرفة جودة كل لتر قبل أن يصل للري.
 
+<p align="center"><a href="https://sultalfaifi.com/WAREVA/experience/"><strong>جرّب التوأم الرقمي مباشرة</strong></a> · <a href="https://sultalfaifi.com/WAREVA/">الموقع</a> · <a href="https://claude.ai/artifact/SbsbXLk3rNHajJckZuoFnW">دليل الهوية</a></p>
+
 ## أين وصلنا
 
 | | الحالة |
@@ -21,7 +23,9 @@
 
 ## جرّبه
 
-يلزم Python 3.10 أو أحدث، ولا مكتبات إضافية:
+أسرع طريقة: [التجربة الحية في المتصفح](https://sultalfaifi.com/WAREVA/experience/)، تعمل على الجوال دون تثبيت. اختر حالة مثل «ارتفاع العكارة» وراقب قرار المتحكم.
+
+لتشغيل لوحة المتابعة والسجل على جهازك يلزم Python 3.10 أو أحدث، ولا مكتبات إضافية:
 
 ```sh
 python -m dashboard.server
@@ -58,4 +62,4 @@ npm run dev
 
 ---
 
-**English.** WAREVA validates treated ablution and hand-wash water in real time before it reaches landscape irrigation. A fixed-rule ESP32 safety controller opens the normally-closed irrigation valve only when every reading is present and within limits, and logs every liter and decision. This repository holds the shared safety rules (tested identically in Python, JavaScript and C++), a digital twin, the dashboard, the Raspberry Pi gateway, the ESP32 firmware, the website and the anomaly-detection research. The physical prototype is the next step; no water-quality result has been measured yet.
+**English.** WAREVA validates treated ablution and hand-wash water in real time before it reaches landscape irrigation. A fixed-rule ESP32 safety controller opens the normally-closed irrigation valve only when every reading is present and within limits, and logs every liter and decision. This repository holds the shared safety rules (tested identically in Python, JavaScript and C++), a digital twin, the dashboard, the Raspberry Pi gateway, the ESP32 firmware, the website and the anomaly-detection research. The physical prototype is the next step; no water-quality result has been measured yet. Try it: [live digital twin](https://sultalfaifi.com/WAREVA/experience/) · [website](https://sultalfaifi.com/WAREVA/).
