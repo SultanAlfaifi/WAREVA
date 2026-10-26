@@ -1,43 +1,48 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>WAREVA · التوأم الرقمي</title>
-  <meta name="description" content="جرّب متحكم الأمان في واريفا: محطة افتراضية في المتصفح، وأعطال تختبر بها قرار الري أو الاحتجاز.">
+  <title>WAREVA · غرفة التحكم</title>
+  <meta name="description" content="غرفة تحكم واريفا: احقن خللًا في الوحدة الافتراضية وراقب متحكم الأمان يقرر، والتنبيه يصل إلى الجوال.">
+  <meta name="theme-color" content="#08121a">
   <link rel="icon" href="../../brand/logos/wareva-mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../src/site.css">
   <link rel="stylesheet" href="../src/experience.css">
   <script type="module" src="../src/experience.js"></script>
 </head>
-<body class="xp">
+<body class="site xp" data-control>
   <header class="xp__bar">
-    <a href="../" aria-label="العودة إلى صفحة واريفا"><picture>
-      <source srcset="../../brand/logos/wareva-lockup-white.svg" media="(prefers-color-scheme: dark)">
-      <img src="../../brand/logos/wareva-lockup.svg" alt="WAREVA · واريفا" width="123" height="32">
-    </picture></a>
-    <span class="xp__tag">محاكاة في المتصفح بنفس قواعد متحكم الأمان</span>
+    <a href="../" class="nav__brand" aria-label="WAREVA · واريفا"><img src="../../brand/logos/wareva-lockup-white.svg" alt="WAREVA · واريفا" width="123" height="32"></a>
+    <span class="xp__title" data-i18n="cr.k">غرفة التحكم الحية</span>
+    <button class="nav__lang" type="button" data-lang-toggle data-i18n="nav.lang">English</button>
   </header>
-
-  <div class="xp__stage" id="stage" aria-hidden="true"></div>
-  <p class="xp__fallback" id="fallback" hidden>تعذر عرض المجسم ثلاثي الأبعاد على هذا الجهاز. المحاكاة والقرارات تعمل في اللوحة.</p>
-
-  <aside class="xp__panel" aria-label="حالة المحطة والتحكم">
-    <div id="status"></div>
-    <ul class="wv-reasons" id="reasons"></ul>
-    <dl class="xp__readings" id="readings"></dl>
-    <div id="valve"></div>
-    <h2 class="label">جرّب حالة</h2>
-    <div class="chips" id="faults"></div>
-    <div class="xp__row">
-      <div class="seg" role="radiogroup" aria-label="سرعة المحاكاة" id="speed">
-        <button type="button" role="radio" data-speed="1">×1</button>
-        <button type="button" role="radio" data-speed="10">×10</button>
-        <button type="button" role="radio" data-speed="60">×60</button>
+  <main class="xp__main">
+    <div class="xp__unit">
+      <div class="stage stage--control" data-stage></div>
+      <div class="stage__tools">
+        <span class="stage__hint" data-i18n="cr.drag">اسحب لتدوير الوحدة</span>
+        <span class="stage__zoom">
+          <button type="button" data-zoom="1.2" aria-label="تقريب">+</button>
+          <button type="button" data-zoom="-1.2" aria-label="تبعيد">−</button>
+        </span>
       </div>
-      <button type="button" class="wv-btn wv-btn--primary" id="reset" disabled>إعادة الضبط بعد الفحص</button>
     </div>
-    <p class="xp__note" id="clock"></p>
-  </aside>
+    <aside class="xp__side">
+      <div class="phone" data-phone></div>
+      <div class="xp__controls">
+        <p class="control__label" data-i18n="cr.faults">اختر حالة</p>
+        <div class="chips" data-faults></div>
+        <div class="control__row">
+          <div class="seg" role="radiogroup" aria-label="سرعة المحاكاة" data-speed>
+            <button type="button" role="radio" aria-checked="true" data-speed-value="1">×1</button>
+            <button type="button" role="radio" aria-checked="false" data-speed-value="10">×10</button>
+            <button type="button" role="radio" aria-checked="false" data-speed-value="60">×60</button>
+          </div>
+          <button type="button" class="btn btn--small" data-reset disabled data-i18n="cr.reset">إعادة الضبط بعد الفحص</button>
+        </div>
+      </div>
+    </aside>
+  </main>
 </body>
 </html>

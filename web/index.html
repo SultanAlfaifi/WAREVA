@@ -1,155 +1,220 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>WAREVA · واريفا</title>
-  <meta name="description" content="واريفا تتحقق من جودة مياه الوضوء والمغاسل المعالجة لحظيًا، ولا تفتح الري إلا لماء مطابق، وتسجّل كل لتر وكل قرار.">
+  <meta name="description" content="واريفا تعالج مياه الوضوء وتتحقق من جودتها لحظيًا، ولا تفتح الري إلا لماء مطابق، وتسجّل كل لتر وكل قرار.">
+  <meta name="theme-color" content="#08121a">
   <link rel="icon" href="../brand/logos/wareva-mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./src/site.css">
+  <script type="module" src="./src/site.js"></script>
 </head>
-<body>
-  <header class="wrap nav">
-    <a href="./" aria-label="WAREVA · واريفا"><picture>
-      <source srcset="../brand/logos/wareva-lockup-white.svg" media="(prefers-color-scheme: dark)">
-      <img src="../brand/logos/wareva-lockup.svg" alt="WAREVA · واريفا" width="154" height="40">
-    </picture></a>
-    <nav class="nav__links" aria-label="أقسام الصفحة">
-      <a href="#problem">المشكلة</a>
-      <a href="#how">كيف تعمل</a>
-      <a href="#product">المنتج</a>
-      <a href="#prototype">النموذج الأولي</a>
-      <a href="#team">الفريق</a>
+<body class="site">
+  <header class="nav" data-nav>
+    <a class="nav__brand" href="#top" aria-label="WAREVA · واريفا"><img src="../brand/logos/wareva-lockup-white.svg" alt="WAREVA · واريفا" width="138" height="36"></a>
+    <nav class="nav__links" aria-label="الأقسام">
+      <a href="#system" data-i18n="nav.system">النظام</a>
+      <a href="#control" data-i18n="nav.control">غرفة التحكم</a>
+      <a href="#why" data-i18n="nav.why">لماذا واريفا</a>
+      <a href="#team" data-i18n="nav.team">الفريق</a>
     </nav>
+    <button class="nav__lang" type="button" data-lang-toggle data-i18n="nav.lang">English</button>
   </header>
 
-  <main>
-    <section class="wrap hero">
-      <div>
-        <h1>لا لتر بلا <span class="v">تحقق</span></h1>
-        <p class="hero__lead">واريفا تتحقق من جودة مياه الوضوء والمغاسل المعالجة لحظيًا قبل أن تصل إلى ري المساحات الخضراء. لا يُفتح صمام الري إلا لماء ضمن الحدود، ويتوقف خلال ثوانٍ عند أي خلل، ويُسجَّل كل لتر وكل قرار.</p>
-        <div class="hero__actions">
-          <a class="cta cta--primary" href="./experience/">جرّب التوأم الرقمي</a>
-          <a class="cta cta--secondary" href="#how">كيف تعمل</a>
+  <main id="top">
+    <!-- The story: one sticky 3D stage; scrolling moves the camera from chapter to chapter. -->
+    <section class="story" id="system" data-story>
+      <div class="story__sticky">
+        <div class="stage stage--story" data-story-stage aria-hidden="true"></div>
+        <div class="story__shade" aria-hidden="true"></div>
+
+        <div class="panel panel--hero is-active" data-chapter="overview">
+          <p class="eyebrow" data-i18n="hero.eyebrow">نظام تحقق ذكي لمياه الوضوء</p>
+          <h1 class="hero__title" data-i18n-html="hero.title">لا لتر بلا <em>تحقق</em></h1>
+          <p class="hero__lead" data-i18n="hero.lead">مياه الوضوء من أنظف المياه الرمادية. واريفا تعالجها وتقيس جودتها لحظيًا، ولا تفتح الري إلا لماء مطابق، وتسجّل كل لتر وكل قرار.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#collect-anchor" data-scroll-to data-i18n="hero.watch">شاهد القرار يُتخذ</a>
+            <a class="btn btn--ghost" href="#control" data-i18n="hero.try">جرّب غرفة التحكم</a>
+          </div>
+          <p class="hero__scroll" data-i18n="hero.scroll">مرّر لتتبّع لترًا واحدًا</p>
+        </div>
+
+        <article class="panel" data-chapter="collect">
+          <p class="panel__k" data-i18n="ch.collect.k">01 · التجميع</p>
+          <h2 class="panel__t" data-i18n="ch.collect.t">يبدأ من المصلى</h2>
+          <p class="panel__b" data-i18n="ch.collect.b"></p>
+        </article>
+        <article class="panel" data-chapter="treat">
+          <p class="panel__k" data-i18n="ch.treat.k">02 · المعالجة</p>
+          <h2 class="panel__t" data-i18n="ch.treat.t"></h2>
+          <p class="panel__b" data-i18n="ch.treat.b"></p>
+        </article>
+        <article class="panel" data-chapter="sense">
+          <p class="panel__k" data-i18n="ch.sense.k">03 · القياس</p>
+          <h2 class="panel__t" data-i18n="ch.sense.t"></h2>
+          <p class="panel__b" data-i18n="ch.sense.b"></p>
+        </article>
+        <article class="panel" data-chapter="gate">
+          <p class="panel__k" data-i18n="ch.gate.k">04 · البوابة</p>
+          <h2 class="panel__t" data-i18n="ch.gate.t"></h2>
+          <p class="panel__b" data-i18n="ch.gate.b"></p>
+        </article>
+        <article class="panel panel--decide" data-chapter="decide">
+          <p class="panel__k" data-i18n="ch.decide.k">05 · القرار</p>
+          <h2 class="panel__t" data-i18n="ch.decide.t"></h2>
+          <div class="outcomes">
+            <p class="outcome outcome--reuse" data-outcome="REUSE"><span class="outcome__dot" aria-hidden="true"></span><span data-i18n="ch.decide.reuse"></span></p>
+            <p class="outcome outcome--hold" data-outcome="HOLD"><span class="outcome__dot" aria-hidden="true"></span><span data-i18n="ch.decide.hold"></span></p>
+          </div>
+        </article>
+
+        <div class="story__progress" aria-hidden="true"><span data-story-bar></span></div>
+      </div>
+      <span id="collect-anchor" class="story__anchor"></span>
+    </section>
+
+    <!-- Live control room: the same twin drives the unit and the phone. -->
+    <section class="section control" id="control" data-control>
+      <div class="wrap">
+        <header class="section__head">
+          <p class="kicker" data-i18n="cr.k">غرفة التحكم الحية</p>
+          <h2 class="section__t" data-i18n="cr.t">احقن خللًا، وراقب القرار</h2>
+          <p class="section__lead" data-i18n="cr.lead"></p>
+        </header>
+        <div class="control__grid">
+          <div class="control__unit">
+            <div class="stage stage--control" data-stage></div>
+            <div class="stage__tools">
+              <span class="stage__hint" data-i18n="cr.drag">اسحب لتدوير الوحدة</span>
+              <span class="stage__zoom">
+                <button type="button" data-zoom="1.2" aria-label="تقريب">+</button>
+                <button type="button" data-zoom="-1.2" aria-label="تبعيد">−</button>
+              </span>
+            </div>
+          </div>
+          <div class="phone" data-phone></div>
+        </div>
+        <div class="control__panel">
+          <p class="control__label" data-i18n="cr.faults">اختر حالة</p>
+          <div class="chips" data-faults></div>
+          <div class="control__row">
+            <div class="seg" role="radiogroup" aria-label="سرعة المحاكاة" data-speed>
+              <button type="button" role="radio" aria-checked="true" data-speed-value="1">×1</button>
+              <button type="button" role="radio" aria-checked="false" data-speed-value="10">×10</button>
+              <button type="button" role="radio" aria-checked="false" data-speed-value="60">×60</button>
+            </div>
+            <button type="button" class="btn btn--small" data-reset disabled data-i18n="cr.reset">إعادة الضبط بعد الفحص</button>
+            <a class="control__full" href="./experience/" data-i18n="cr.full">افتح بملء الشاشة</a>
+          </div>
         </div>
       </div>
-      <svg class="gate" viewBox="0 0 520 360" role="img" aria-labelledby="gate-title">
-        <title id="gate-title">مسار الماء: من المعالجة إلى بوابة التحقق، ثم إلى الري إن كان مطابقًا أو الاحتجاز إن لم يكن.</title>
-        <g fill="none" stroke-linecap="round" stroke-width="6">
-          <path d="M470 60 H330" stroke="var(--brand)"/>
-          <path d="M250 60 H190 Q160 60 160 90 V150" stroke="var(--brand)"/>
-          <path d="M160 230 V290 H60" stroke="var(--status-reuse)"/>
-          <path d="M200 190 H330 V290" stroke="var(--status-hold-edge)" stroke-dasharray="2 12"/>
-        </g>
-        <path d="M490 22 L507 39 A24 24 0 1 1 473 39 Z" fill="var(--brand)"/>
-        <rect x="250" y="30" width="80" height="60" rx="16" fill="var(--surface-000)" stroke="var(--line-strong)" stroke-width="2"/>
-        <circle cx="275" cy="60" r="6" fill="var(--brand)"/><circle cx="295" cy="60" r="6" fill="var(--brand)"/><circle cx="315" cy="60" r="6" fill="var(--brand)"/>
-        <rect x="110" y="150" width="100" height="80" rx="16" fill="var(--verify)"/>
-        <path d="M140 191 L155 205 L182 176" fill="none" stroke="var(--surface-000)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-        <rect x="20" y="268" width="60" height="44" rx="10" fill="var(--status-reuse)"/>
-        <rect x="300" y="268" width="60" height="44" rx="10" fill="var(--status-hold)" stroke="var(--status-hold-edge)" stroke-width="2"/>
-        <text x="490" y="112" text-anchor="middle" class="t-strong">ماء معالج</text>
-        <text x="290" y="112" text-anchor="middle">حساسات لحظية</text>
-        <text x="225" y="250" text-anchor="start" class="t-strong">بوابة التحقق</text>
-        <text x="50" y="338" text-anchor="middle" class="t-strong">ري</text>
-        <text x="330" y="338" text-anchor="middle">احتجاز</text>
-      </svg>
     </section>
 
-    <div class="wrap">
-      <p class="status-strip"><span><strong>اليوم:</strong> نموذج برمجي يعمل، فيه توأم رقمي وقواعد أمان ولوحة متابعة وسجل.</span><span><strong>التالي:</strong> نموذج مادي قابل للاختبار في 6 أسابيع بأكاديمية الطاقة والمياه في رابغ.</span></p>
-    </div>
-
-    <section class="wrap section" id="problem" aria-labelledby="problem-title">
-      <h2 id="problem-title">ماء نظيف يذهب للصرف، ومسطحات تُروى بماء محلّى</h2>
-      <p class="section__lead">مياه الوضوء والمغاسل من أنظف المياه الرمادية، لكنها تُصرف يوميًا في المرافق الكبيرة، لأن لا أحد يضمن جودة كل لتر قبل وصوله للري. المحطات الحالية تعالج، لكن جودة ما يخرج منها تُعرف بعينة مختبر بعد أيام.</p>
-      <dl class="facts">
-        <div><dt>متر مكعب من مياه الوضوء يوميًا في مرفق القشاشية وحده بالمسجد الحرام</dt><dd>800</dd></div>
-        <div><dt>بدء العمل باللائحة التنفيذية لكفاءة وترشيد المياه</dt><dd>21/3/2027</dd></div>
-        <div><dt>ألف ريال، نطاق غرامة استخدام مياه الشرب في غير الشرب مع توفر بديل</dt><dd>25–200</dd></div>
-      </dl>
-      <p class="source-note">أرقام المرفق والغرامات من عرض الفريق ومصادره الموثقة في <code>docs/product.md</code>. تاريخ اللائحة من نصها الرسمي.</p>
-    </section>
-
-    <section class="wrap section" id="how" aria-labelledby="how-title">
-      <h2 id="how-title">الفرق ليس في المعالجة، بل في معرفة جودة كل لتر قبل أن يصل للري</h2>
-      <ol class="steps">
-        <li><h3>تجميع وضخ</h3><p>تُجمع مياه الوضوء والمغاسل المفصولة في خزان، وتُضخ للمعالجة بتدفق ثابت.</p></li>
-        <li><h3>معالجة</h3><p>وسائط ترشيح، ثم كربون منشّط، ثم خرطوشة 5 ميكرون، ثم تعقيم بجرعات متناسبة مع التدفق.</p></li>
-        <li><h3>قياس لحظي</h3><p>حساسات للعكارة والأس الهيدروجيني والكلور المتبقي وORP والضغط والتدفق ومستوى الخزان.</p></li>
-        <li class="is-gate"><h3>قرار متحكم الأمان</h3><p>متحكم ESP32 يقارن كل قراءة بحدود ثابتة. ماء مطابق: يُفتح صمام الري. خلل أو قراءة مفقودة أو انقطاع كهرباء: يبقى مغلقًا.</p></li>
-        <li><h3>سجل ومتابعة</h3><p>كل لتر وكل قرار وسببه في سجل قابل للتصدير، ولوحة متابعة عن بعد تقلل الزيارات الحضورية.</p></li>
-      </ol>
-      <div class="compare-wrap">
-        <table class="compare">
-          <thead><tr><th scope="col">المعيار</th><th scope="col">بدون إعادة استخدام</th><th scope="col">محطات السوق</th><th scope="col">واريفا</th></tr></thead>
-          <tbody>
-            <tr><th scope="row">الجودة</th><td>لا ينطبق</td><td>تُعرف بعينة بعد أيام</td><td>تُقاس لحظيًا قبل كل لتر</td></tr>
-            <tr><th scope="row">عند الخلل</th><td>لا ينطبق</td><td>يُكتشف في الزيارة التالية</td><td>يتوقف الري خلال ثوانٍ</td></tr>
-            <tr><th scope="row">المتابعة</th><td>لا ينطبق</td><td>زيارات حضورية دورية</td><td>عن بعد، والزيارة عند الحاجة</td></tr>
-            <tr><th scope="row">التوثيق</th><td>لا ينطبق</td><td>يدوي</td><td>سجل لكل لتر وكل قرار</td></tr>
-          </tbody>
-        </table>
+    <section class="section" aria-labelledby="feat-t">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="kicker" data-i18n="feat.k">النظام الذكي</p>
+          <h2 class="section__t" id="feat-t" data-i18n="feat.t"></h2>
+        </header>
+        <ol class="features" data-reveal>
+          <li><span class="features__n">01</span><h3 data-i18n="feat.1.t"></h3><p data-i18n="feat.1.b"></p></li>
+          <li><span class="features__n">02</span><h3 data-i18n="feat.2.t"></h3><p data-i18n="feat.2.b"></p></li>
+          <li><span class="features__n">03</span><h3 data-i18n="feat.3.t"></h3><p data-i18n="feat.3.b"></p></li>
+          <li><span class="features__n">04</span><h3 data-i18n="feat.4.t"></h3><p data-i18n="feat.4.b"></p></li>
+          <li><span class="features__n">05</span><h3 data-i18n="feat.5.t"></h3><p data-i18n="feat.5.b"></p></li>
+          <li><span class="features__n">06</span><h3 data-i18n="feat.6.t"></h3><p data-i18n="feat.6.b"></p></li>
+        </ol>
       </div>
     </section>
 
-    <section class="wrap section" id="product" aria-labelledby="product-title">
-      <h2 id="product-title">شكلان لنفس القلب: التحقق والقرار</h2>
-      <div class="forms">
-        <article class="form-card">
-          <h3>صندوق واريفا الذكي</h3>
-          <p>يُضاف إلى محطة مياه رمادية قائمة، حتى محطات الموردين الآخرين، فيعطيها حساسات وقرار ري آليًا وسجلًا ومتابعة عن بعد. يسبق التركيبَ فحصُ توافق المحطة.</p>
-          <span class="spec">حساسات + ESP32 + Raspberry Pi + لوحة متابعة</span>
-        </article>
-        <article class="form-card">
-          <h3>وحدة واريفا المتكاملة</h3>
-          <p>معالجة وتحقق وتحكم في وحدة واحدة، لمرافق لا توجد فيها محطة.</p>
-          <span class="spec">15 م³/يوم · 1 م³/ساعة لمدة 15 ساعة</span>
-        </article>
-      </div>
-      <ul class="principles">
-        <li><svg class="wv-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v7l8-3.5L20 16V9l-8 3.5z"/><path d="M12 12.5V6"/><path d="M9 5.5h6"/></svg><span><strong>الصمام مغلق افتراضيًا</strong>عند انقطاع الكهرباء أو فقد قراءة أو تعارض موضع الصمام، يبقى الري متوقفًا.</span></li>
-        <li><svg class="wv-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.6L17.3 8.9A7.5 7.5 0 1 1 6.7 8.9Z"/><path d="M8.9 14.6l2.2 2.2 4.1-4.4"/></svg><span><strong>قواعد ثابتة تقرر</strong>حدود الجودة مكتوبة في ملف واحد، ويطبقها المتحكم والتوأم واللوحة بنفس الطريقة.</span></li>
-        <li><svg class="wv-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.6 16.5a8 8 0 1 1 14.8 0"/><path d="M12 13.5l3.6-3.8"/><circle cx="12" cy="14" r="1.2"/><path d="M8 19.5h8"/></svg><span><strong>الذكاء الاصطناعي يراقب ولا يفتح الري</strong>طبقة بحثية لرصد سلوك الحساسات غير الطبيعي، تستطيع طلب الإيقاف فقط.</span></li>
-      </ul>
-    </section>
-
-    <section class="wrap section" id="prototype" aria-labelledby="prototype-title">
-      <h2 id="prototype-title">النموذج الأولي: ستة أسابيع لإثبات أن الماء غير المطابق لا يصل للري</h2>
-      <p class="section__lead">نموذج مصغّر بخزان ومضخة وأعمدة شفافة وحساسات وصمام ري، يُختبر في أكاديمية الطاقة والمياه برابغ على مياه وضوء ومغاسل حقيقية. هذه أهداف القبول، ولم تُختبر بعد.</p>
-      <div class="plan-facts">
-        <div><span>المدة</span><strong>6 أسابيع</strong></div>
-        <div><span>الميزانية التقديرية</span><strong>9,500 ريال</strong></div>
-      </div>
-      <div class="compare-wrap">
-        <table class="kpis">
-          <thead><tr><th scope="col">المؤشر</th><th scope="col">الهدف</th><th scope="col">معيار النجاح</th></tr></thead>
-          <tbody>
-            <tr><td>زمن إيقاف الري عند ماء غير مطابق</td><td>≤ 10 ثوانٍ</td><td>20 من 20 حالة تلوث مصطنعة</td></tr>
-            <tr><td>بقاء الصمام مغلقًا عند فصل الكهرباء أو الحساس</td><td>مغلق</td><td>10 من 10 حالات فصل متعمد</td></tr>
-            <tr><td>عكارة الماء المتجه للري</td><td>&lt; 2 NTU متوسطًا</td><td>3 من 3 عينات تجتاز مختبرًا معتمدًا</td></tr>
-            <tr><td>دقة حساس العكارة</td><td>±10%</td><td>18 من 20 قراءة مقابل جهاز مرجعي</td></tr>
-          </tbody>
-        </table>
+    <section class="section why" id="why" aria-labelledby="why-t">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="kicker" data-i18n="why.k">لماذا واريفا</p>
+          <h2 class="section__t section__t--wide" id="why-t" data-i18n="why.t"></h2>
+          <p class="section__lead" data-i18n="why.lead"></p>
+        </header>
+        <div class="table-wrap" data-reveal>
+          <table class="compare">
+            <thead><tr>
+              <th scope="col" data-i18n="why.col.cap"></th><th scope="col" data-i18n="why.col.station"></th>
+              <th scope="col" data-i18n="why.col.appliance"></th><th scope="col" data-i18n="why.col.analyzer"></th>
+              <th scope="col" class="is-us" data-i18n="why.col.wareva"></th>
+            </tr></thead>
+            <tbody>
+              <tr><th scope="row" data-i18n="why.r1"></th><td data-i18n="why.r1.s"></td><td data-i18n="why.r1.a"></td><td data-i18n="why.r1.i"></td><td class="is-us" data-i18n="why.r1.w"></td></tr>
+              <tr><th scope="row" data-i18n="why.r2"></th><td data-i18n="why.r2.s"></td><td data-i18n="why.r2.a"></td><td data-i18n="why.r2.i"></td><td class="is-us" data-i18n="why.r2.w"></td></tr>
+              <tr><th scope="row" data-i18n="why.r3"></th><td data-i18n="why.r3.s"></td><td data-i18n="why.r3.a"></td><td data-i18n="why.r3.i"></td><td class="is-us" data-i18n="why.r3.w"></td></tr>
+              <tr><th scope="row" data-i18n="why.r4"></th><td data-i18n="why.r4.s"></td><td data-i18n="why.r4.a"></td><td data-i18n="why.r4.i"></td><td class="is-us" data-i18n="why.r4.w"></td></tr>
+              <tr><th scope="row" data-i18n="why.r5"></th><td data-i18n="why.r5.s"></td><td data-i18n="why.r5.a"></td><td data-i18n="why.r5.i"></td><td class="is-us" data-i18n="why.r5.w"></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note" data-i18n="why.note"></p>
       </div>
     </section>
 
-    <section class="wrap section" id="team" aria-labelledby="team-title">
-      <h2 id="team-title">الفريق: الماء والجهاز والبرمجيات</h2>
-      <ul class="team">
-        <li><strong>سلطان الفيفي</strong><span>قائد الفريق. التوأم الرقمي ولوحة المتابعة ومنطق الأمان وأبحاث الذكاء الاصطناعي.</span></li>
-        <li><strong>فيصل الهلالي</strong><span>تصميم النموذج المادي وتجميعه: الحساسات والصمامات والمضخات ومتحكم ESP32.</span></li>
-        <li><strong>عبدالسلام العتيبي</strong><span>مسار المعالجة وخطة الاختبار والعينات المخبرية والاشتراطات.</span></li>
-      </ul>
+    <section class="section" aria-labelledby="forms-t">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="kicker" data-i18n="forms.k">المنتج</p>
+          <h2 class="section__t" id="forms-t" data-i18n="forms.t"></h2>
+        </header>
+        <div class="forms" data-reveal>
+          <article class="form-card form-card--box"><p class="form-card__s" data-i18n="forms.box.s"></p><h3 data-i18n="forms.box.t"></h3><p data-i18n="forms.box.b"></p></article>
+          <article class="form-card"><p class="form-card__s" data-i18n="forms.unit.s"></p><h3 data-i18n="forms.unit.t"></h3><p data-i18n="forms.unit.b"></p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="now-t">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="kicker" data-i18n="now.k">لماذا الآن</p>
+          <h2 class="section__t" id="now-t" data-i18n="now.t"></h2>
+        </header>
+        <dl class="facts" data-reveal>
+          <div><dt data-i18n="now.1.b"></dt><dd><bdi data-i18n="now.1.v"></bdi> <small data-i18n="now.1.u"></small></dd></div>
+          <div><dt data-i18n="now.2.b"></dt><dd><bdi data-i18n="now.2.v"></bdi></dd></div>
+          <div><dt data-i18n="now.3.b"></dt><dd><bdi data-i18n="now.3.v"></bdi> <small data-i18n="now.3.u"></small></dd></div>
+        </dl>
+        <p class="note" data-i18n="now.note"></p>
+      </div>
+    </section>
+
+    <section class="section" id="team" aria-labelledby="team-t">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="kicker" data-i18n="team.k">الفريق</p>
+          <h2 class="section__t" id="team-t" data-i18n="team.t"></h2>
+        </header>
+        <ul class="team" data-reveal>
+          <li><strong>سلطان عبدالله الفيفي</strong><span data-i18n="team.lead"></span></li>
+          <li><strong>عبدالسلام منيع راضي العتيبي</strong><span data-i18n="team.water"></span></li>
+          <li><strong>فيصل عبدالعزيز الهلالي</strong><span data-i18n="team.mech"></span></li>
+          <li><strong>سمية صالح الغامدي</strong></li>
+          <li><strong>لمار احمد السلمي</strong></li>
+          <li><strong>ديما زكي يماني</strong></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section end">
+      <div class="wrap end__inner">
+        <img src="../brand/logos/wareva-mark-white.svg" alt="" width="56" height="56">
+        <h2 class="section__t" data-i18n="end.t">شاهد واريفا تقرر بنفسك</h2>
+        <a class="btn btn--primary" href="./experience/" data-i18n="end.cta">افتح غرفة التحكم</a>
+      </div>
     </section>
   </main>
 
-  <footer class="wrap footer">
-    <picture>
-      <source srcset="../brand/logos/wareva-lockup-white.svg" media="(prefers-color-scheme: dark)">
-      <img src="../brand/logos/wareva-lockup.svg" alt="WAREVA · واريفا" width="108" height="28">
-    </picture>
-    <span>Water Reuse Validation · البرمجيات مفتوحة المصدر برخصة MIT</span>
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <img src="../brand/logos/wareva-lockup-white.svg" alt="WAREVA · واريفا" width="108" height="28">
+      <span data-i18n="foot.rights"></span>
+      <a href="https://github.com/SultanAlfaifi/WAREVA" data-i18n="foot.code">الكود على GitHub</a>
+    </div>
   </footer>
 </body>
 </html>

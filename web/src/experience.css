@@ -1,77 +1,31 @@
-/* 3D experience: full-height stage with a side panel (bottom sheet on phones). */
+/* Full-screen control room: the unit fills the screen, the phone and the scenarios sit beside it. */
 
 html, body.xp { height: 100%; }
-body.xp { display: grid; grid-template-rows: auto minmax(0, 1fr); grid-template-columns: 380px minmax(0, 1fr); overflow: hidden; }
-
+body.xp { display: grid; grid-template-rows: auto minmax(0, 1fr); overflow: hidden; }
 .xp__bar {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  padding-block: var(--space-3);
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; align-items: center; gap: var(--space-4);
+  padding-top: calc(env(safe-area-inset-top, 0px) + 12px); padding-bottom: 12px;
+  padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px));
   border-bottom: 1px solid var(--line);
-  background: var(--surface-000);
 }
-.xp__bar img { display: block; height: 32px; width: auto; }
-.xp__tag { font: 400 13px/1.4 var(--font-sans); color: var(--ink-muted); }
-
-.xp__stage { position: relative; min-height: 0; min-width: 0; overflow: hidden; grid-column: 2; grid-row: 2; }
-.xp__stage canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; touch-action: none; }
-.xp__fallback { grid-column: 2; grid-row: 2; align-self: center; justify-self: center; max-width: 30em; padding: var(--space-6); text-align: center; color: var(--ink-muted); }
-.xp__label {
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  padding: 2px var(--space-2);
-  border-radius: var(--radius-s);
-  background: var(--surface-000);
-  color: var(--ink);
-  font: 500 12px/1.5 var(--font-sans);
-  white-space: nowrap;
-  pointer-events: none;
-  translate: -50% -100%;
-  box-shadow: var(--shadow-raised);
+.xp__bar .nav__brand img { display: block; height: 30px; width: auto; }
+.xp__title { font: 500 14px/1 var(--font-sans); color: var(--brand); }
+.xp__bar .nav__lang { margin-inline-start: auto; }
+.xp__main { display: grid; grid-template-columns: 380px minmax(0, 1fr); min-height: 0; }
+.xp__unit { position: relative; grid-column: 2; grid-row: 1; min-width: 0; min-height: 0; }
+.xp__unit .stage__canvas { touch-action: none; }
+.xp__side {
+  grid-column: 1; grid-row: 1; display: grid; align-content: start; justify-items: center; gap: var(--space-6);
+  min-height: 0; overflow-y: auto; padding: var(--space-6) var(--space-6) var(--space-8);
+  border-inline-end: 1px solid var(--line); background: var(--surface-100);
 }
-
-.xp__panel {
-  grid-column: 1;
-  grid-row: 2;
-  display: grid;
-  align-content: start;
-  gap: var(--space-4);
-  min-height: 0;
-  overflow-y: auto;
-  padding: var(--space-6) max(16px, env(safe-area-inset-right, 0px)) var(--space-8) max(16px, env(safe-area-inset-left, 0px));
-  border-inline-end: 1px solid var(--line);
-  background: var(--surface-100);
-}
-.xp__panel .label { margin: var(--space-2) 0 0; }
-.xp__readings { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin: 0; }
-.xp__readings div { display: grid; gap: 2px; padding: var(--space-3); border: 1px solid var(--line); border-radius: var(--radius-m); background: var(--surface-000); }
-.xp__readings div[data-state="out"] { border: 2px solid var(--status-hold-edge); }
-.xp__readings div[data-state="missing"] { border: 2px solid var(--danger); }
-.xp__readings dt { font: 500 12px/1.4 var(--font-sans); color: var(--ink-muted); }
-.xp__readings dd { margin: 0; font: 500 20px/1.2 var(--font-mono); font-variant-numeric: tabular-nums; }
-.xp__readings dd small { font: 500 12px/1 var(--font-sans); color: var(--ink-muted); }
-.xp__row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
-.xp__note { margin: 0; font: 400 12px/1.5 var(--font-mono); color: var(--ink-muted); direction: ltr; text-align: end; }
-
-.seg { display: inline-flex; gap: 2px; padding: 2px; border: 1px solid var(--line-strong); border-radius: var(--radius-m); background: var(--surface-200); }
-.seg button { min-height: 36px; padding: 0 var(--space-3); border: 0; border-radius: var(--radius-s); background: transparent; color: var(--ink); font: 500 14px/1 var(--font-sans); cursor: pointer; }
-.seg button[aria-checked="true"] { background: var(--brand); color: var(--on-brand); }
-.chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
-.chips button { min-height: 36px; padding: 0 var(--space-3); border: 1px solid var(--line-strong); border-radius: var(--radius-pill); background: var(--surface-000); color: var(--ink); font: 400 14px/1 var(--font-sans); cursor: pointer; }
-.chips button[aria-pressed="true"] { border-color: var(--brand); background: var(--brand); color: var(--on-brand); }
-.seg button:focus-visible, .chips button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.xp__side .phone { width: 280px; }
+.xp__controls { display: grid; gap: var(--space-3); width: 100%; }
 
 @media (max-width: 860px) {
-  body.xp { grid-template-columns: 1fr; grid-template-rows: auto minmax(260px, 45vh) 1fr; overflow: auto; height: auto; min-height: 100%; }
-  .xp__stage, .xp__fallback { grid-column: 1; grid-row: 2; }
-  .xp__panel { grid-column: 1; grid-row: 3; overflow: visible; border-inline-end: 0; border-top: 1px solid var(--line); }
-  .xp__tag { display: none; }
+  body.xp { overflow: auto; height: auto; min-height: 100%; }
+  .xp__main { grid-template-columns: 1fr; }
+  .xp__unit { grid-column: 1; grid-row: 1; height: 56svh; }
+  .xp__side { grid-column: 1; grid-row: 2; border-inline-end: 0; border-top: 1px solid var(--line); overflow: visible; }
+  .xp__title { display: none; }
 }

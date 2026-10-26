@@ -23,7 +23,7 @@ flowchart RL
 | `dashboard/` | خادم اللوحة والسجل والواجهة العربية | Python (المكتبة القياسية)، SQLite |
 | `gateway/` | البوابة على Raspberry Pi | Python (المكتبة القياسية) |
 | `firmware/esp32/` | برنامج متحكم الأمان | C++، Arduino، PlatformIO |
-| `web/` | الموقع التعريفي وتجربة 3D | Vite، Three.js |
+| `web/` | موقع الشركة: رحلة لتر واحد بالتمرير، وغرفة تحكم حية مع موك أب الجوال، بالعربية والإنجليزية | Vite، Three.js، postprocessing، camera-controls، GSAP، Lenis |
 | `research/` | كشف الشذوذ (V8) | numpy، pandas، scikit-learn |
 | `brand/` | الهوية: الرموز والشعارات والأيقونات والخطوط | CSS، SVG |
 
