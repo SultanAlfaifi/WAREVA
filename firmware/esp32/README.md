@@ -1,3 +1,5 @@
+<div dir="rtl">
+
 # متحكم الأمان ESP32
 
 كل ثانية: يقرأ الحساسات، ويقرر بقواعد [`safety.h`](include/safety.h)، ويشغّل مرحّل الصمام ومرحّل مضخة الري، ويطبع سطر JSON للبوابة. القرار لا يعتمد على Raspberry Pi ولا على الشبكة.
@@ -30,3 +32,5 @@ g++ -std=c++17 -Iinclude -Itest test/test_safety.cpp -o test_safety && ./test_sa
 ```
 
 اختبار `test_safety.cpp` يمرّ بكل الحالات (48 خطوة). بناء `main.cpp` للوحة ESP32 لم يُجرَّب بعد على هذا الجهاز؛ يبنيه CI بـ PlatformIO.
+
+</div>

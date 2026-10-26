@@ -1,4 +1,11 @@
-<p align="center"><img src="brand/logos/wareva-lockup.svg" alt="WAREVA · واريفا" height="72"></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="brand/logos/wareva-lockup-white.svg">
+    <img src="brand/logos/wareva-lockup.svg" alt="WAREVA · واريفا" height="72">
+  </picture>
+</p>
+
+<div dir="rtl">
 
 <h1 align="center">لا لتر بلا تحقق</h1>
 
@@ -12,7 +19,7 @@
 
 | | الحالة |
 |---|---|
-| قواعد الأمان | تعمل ومختبرة بنفس 36 حالة في Python وJavaScript وC++ |
+| قواعد الأمان | تعمل ومختبرة بنفس 36 حالة في Python وJavaScript وC++&lrm; |
 | التوأم الرقمي واللوحة والسجل | تعمل على الحاسوب وRaspberry Pi |
 | برنامج ESP32 والبوابة | مكتوبان ومختبران برمجيًا، ولم يُشغَّلا على عتاد بعد |
 | الموقع وتجربة 3D | يعملان في المتصفح والجوال |
@@ -44,15 +51,15 @@ npm run dev
 
 | المجلد | ما فيه |
 |---|---|
-| [`core/`](core/) | قواعد الأمان: مصدر واحد للحدود والأسباب، وحالات اختبار مشتركة |
-| [`twin/`](twin/) | التوأم الرقمي للوحدة |
-| [`dashboard/`](dashboard/) | لوحة المتابعة والسجل |
-| [`gateway/`](gateway/) | بوابة Raspberry Pi بين المتحكم واللوحة |
-| [`firmware/esp32/`](firmware/esp32/) | برنامج متحكم الأمان |
-| [`web/`](web/) | الموقع التعريفي وتجربة 3D |
-| [`research/`](research/) | كشف الشذوذ في قراءات الحساسات |
-| [`brand/`](brand/) | الهوية: الشعار والألوان والخطوط والأيقونات |
-| [`docs/`](docs/) | [المنتج](docs/product.md) · [البنية](docs/architecture.md) · [قواعد الأمان](docs/safety-rules.md) · [النموذج الأولي](docs/prototype-plan.md) |
+| [`core/`](core/)&lrm; | قواعد الأمان: مصدر واحد للحدود والأسباب، وحالات اختبار مشتركة |
+| [`twin/`](twin/)&lrm; | التوأم الرقمي للوحدة |
+| [`dashboard/`](dashboard/)&lrm; | لوحة المتابعة والسجل |
+| [`gateway/`](gateway/)&lrm; | بوابة Raspberry Pi بين المتحكم واللوحة |
+| [`firmware/esp32/`](firmware/esp32/)&lrm; | برنامج متحكم الأمان |
+| [`web/`](web/)&lrm; | الموقع التعريفي وتجربة 3D |
+| [`research/`](research/)&lrm; | كشف الشذوذ في قراءات الحساسات |
+| [`brand/`](brand/)&lrm; | الهوية: الشعار والألوان والخطوط والأيقونات |
+| [`docs/`](docs/)&lrm; | [المنتج](docs/product.md) · [البنية](docs/architecture.md) · [قواعد الأمان](docs/safety-rules.md) · [النموذج الأولي](docs/prototype-plan.md) |
 
 ## الفريق
 
@@ -65,7 +72,9 @@ npm run dev
 | لمار احمد السلمي | |
 | ديما زكي يماني | |
 
-البرمجيات برخصة [MIT](LICENSE). الخطوط برخصة SIL Open Font License، ونصوصها في [`brand/fonts/`](brand/fonts/).
+البرمجيات برخصة [MIT](LICENSE). الخطوط برخصة SIL Open Font License، ونصوصها في [`brand/fonts/`](brand/fonts/)&lrm;.
+
+</div>
 
 ---
 

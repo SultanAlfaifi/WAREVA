@@ -1,3 +1,5 @@
+<div dir="rtl">
+
 # واريفا — وحدة البحث (WAREVA research)
 
 هذه الوحدة تحفظ أفضل نموذج من مرحلة «مورد» السابقة، وهو **V8**: كاشف شذوذ يقرأ تدفقات حساسات جودة المياه دقيقةً بدقيقة ويعطي كل قراءة درجة بين 0 و1. ترتفع الدرجة عندما يتصرف الحساس أو الماء بشكل غير معتاد، فنستخدمها للحكم على مدى الثقة بقراءات الحساسات.
@@ -38,7 +40,7 @@
 | GECCO 2017 و2018 و2019 | Zenodo: [3884465](https://zenodo.org/records/3884465)، [3884398](https://zenodo.org/records/3884398)، [4304080](https://zenodo.org/records/4304080) | CC-BY-4.0 |
 | WaterHub (ADASen) | Eawag: [10.25678/0002WJ](https://doi.org/10.25678/0002WJ) | CC0-1.0 |
 
-`download_data.py` ينزّل الملفات من الناشر ويتحقق من SHA-256 ويحفظها في `data/` (خارج git). أرشيف WaterHub حجمه 1.3 GB، يُنزَّل فقط مع `--waterhub`، و`run.py` لا يقرؤه بعد.
+&rlm;`download_data.py` ينزّل الملفات من الناشر ويتحقق من SHA-256 ويحفظها في `data/`&lrm; (خارج git). أرشيف WaterHub حجمه 1.3 GB، يُنزَّل فقط مع &lrm;`--waterhub`، و`run.py` لا يقرؤه بعد.
 
 ## التشغيل
 
@@ -55,8 +57,10 @@ py -3 -m venv .venv
 
 ## الملفات
 
-- `wareva_research/features.py` — المرجع الطبيعي والخصائص السببية.
+- &rlm;`wareva_research/features.py` — المرجع الطبيعي والخصائص السببية.
 - `wareva_research/model.py` — مُقدِّر V8 وأوزان البداية.
 - `wareva_research/metrics.py` — مقاييس الأحداث والإنذارات الكاذبة.
 - `wareva_research/pipeline.py` — فترات GECCO، سياسة الإنذار، المعايرة، التجميع.
 - `run.py` — التدريب والتقرير. `download_data.py` — تنزيل البيانات.
+
+</div>

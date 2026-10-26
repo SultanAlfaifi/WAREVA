@@ -1,3 +1,5 @@
+<div dir="rtl">
+
 # البنية التقنية
 
 ```mermaid
@@ -18,14 +20,14 @@ flowchart RL
 
 | المجلد | ما فيه | التقنية |
 |---|---|---|
-| `core/` | قواعد الأمان: الحدود والحالات المشتركة وتنفيذ Python وJS | Python، JS |
-| `twin/` | التوأم الرقمي: خزانان 5000 لتر، تدفق 1000 لتر/ساعة، ستة أعطال | Python، ونسخة JS للمتصفح |
-| `dashboard/` | خادم اللوحة والسجل والواجهة العربية | Python (المكتبة القياسية)، SQLite |
-| `gateway/` | البوابة على Raspberry Pi | Python (المكتبة القياسية) |
-| `firmware/esp32/` | برنامج متحكم الأمان | C++، Arduino، PlatformIO |
-| `web/` | موقع الشركة: رحلة لتر واحد بالتمرير، وغرفة تحكم حية مع موك أب الجوال، بالعربية والإنجليزية | Vite، Three.js، postprocessing، camera-controls، GSAP، Lenis |
-| `research/` | كشف الشذوذ (V8) | numpy، pandas، scikit-learn |
-| `brand/` | الهوية: الرموز والشعارات والأيقونات والخطوط | CSS، SVG |
+| `core/`&lrm; | قواعد الأمان: الحدود والحالات المشتركة وتنفيذ Python وJS | Python، JS |
+| `twin/`&lrm; | التوأم الرقمي: خزانان 5000 لتر، تدفق 1000 لتر/ساعة، ستة أعطال | Python، ونسخة JS للمتصفح |
+| `dashboard/`&lrm; | خادم اللوحة والسجل والواجهة العربية | Python (المكتبة القياسية)، SQLite |
+| `gateway/`&lrm; | البوابة على Raspberry Pi | Python (المكتبة القياسية) |
+| `firmware/esp32/`&lrm; | برنامج متحكم الأمان | C++، Arduino، PlatformIO |
+| `web/`&lrm; | موقع الشركة: رحلة لتر واحد بالتمرير، وغرفة تحكم حية مع موك أب الجوال، بالعربية والإنجليزية | Vite، Three.js، postprocessing، camera-controls، GSAP، Lenis |
+| `research/`&lrm; | كشف الشذوذ (V8) | numpy، pandas، scikit-learn |
+| `brand/`&lrm; | الهوية: الرموز والشعارات والأيقونات والخطوط | CSS، SVG |
 
 ## التوأم الرقمي
 
@@ -33,11 +35,11 @@ flowchart RL
 
 الأعطال الستة للاختبار: ارتفاع العكارة، وفقد قراءة الكلور، وانسداد المرشح، وانقطاع الكهرباء، وتعطل صمام الري مغلقًا، والتشغيل الاعتيادي.
 
-`twin/trace.json` سيناريو ثابت يجب أن يعيد إنتاجه التوأمان (Python وJS) حرفيًا. بعد أي تعديل مقصود على التوأم: `python -m twin.plant --write-trace`.
+&rlm;`twin/trace.json` سيناريو ثابت يجب أن يعيد إنتاجه التوأمان (Python وJS) حرفيًا. بعد أي تعديل مقصود على التوأم: `python -m twin.plant --write-trace`.
 
 ## الرسائل بين الأجزاء
 
-ESP32 يطبع سطرًا كل ثانية:
+&rlm;ESP32 يطبع سطرًا كل ثانية:
 
 ```json
 {"device":"wareva-proto-1","boot":"1a2b3c4d","seq":42,
@@ -56,7 +58,7 @@ python -m gateway.gateway --serial /dev/ttyUSB0 # على Raspberry Pi مع ال�
 npm install && npm run dev                      # الموقع والتجربة على http://127.0.0.1:4173
 ```
 
-اللوحة تعمل على `127.0.0.1` افتراضيًا. `--host 0.0.0.0` لشبكة محلية موثوقة فقط، لأنها بلا تسجيل دخول.
+اللوحة تعمل على `127.0.0.1` افتراضيًا. &lrm;`--host 0.0.0.0` لشبكة محلية موثوقة فقط، لأنها بلا تسجيل دخول.
 
 ## الاختبارات
 
@@ -68,3 +70,5 @@ g++ -std=c++17 -Ifirmware/esp32/include -Ifirmware/esp32/test firmware/esp32/tes
 ```
 
 اختبارات البحث منفصلة لأنها تحتاج مكتبات علمية: انظر [research/README.md](../research/README.md). كل هذه الاختبارات تفحص البرمجيات، ولا تثبت جودة ماء أو أداء جهاز.
+
+</div>

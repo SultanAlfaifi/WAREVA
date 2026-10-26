@@ -1,3 +1,5 @@
+<div dir="rtl">
+
 # قواعد الأمان
 
 القواعد معرّفة مرة واحدة في [`core/rules.json`](../core/rules.json). ثلاثة تنفيذات تطبقها، وكلها تجتاز نفس الحالات في [`core/vectors.json`](../core/vectors.json):
@@ -6,7 +8,7 @@
 |---|---|---|
 | Python | التوأم الرقمي واللوحة | `core/decide.py` |
 | JavaScript | تجربة المتصفح | `core/decide.js` |
-| C++ | متحكم ESP32 في الجهاز | `firmware/esp32/include/safety.h` |
+| C++&lrm; | متحكم ESP32 في الجهاز | `firmware/esp32/include/safety.h` |
 
 ## المبادئ
 
@@ -21,13 +23,13 @@
 
 | القراءة | الحد | الكود عند التجاوز |
 |---|---|---|
-| العكارة | ≤ 2.0 NTU | `TURBIDITY_HIGH` |
-| الأس الهيدروجيني | 6.5 – 8.5 | `PH_OUT_OF_RANGE` |
-| الكلور المتبقي | 0.2 – 0.5 mg/L | `CHLORINE_OUT_OF_RANGE` |
-| فرق الضغط عبر المرشح (p1 − p2) | ≤ 0.9 bar | `FILTER_DP_HIGH` |
-| ضغط الخط | ≤ 5.0 bar | `LINE_PRESSURE_HIGH` |
-| مستوى الخزان المعالج | ≥ 10% | `TREATED_TANK_LOW` |
-| التدفق والصمام مغلق | ≤ 0.5 L/min | `VALVE_MISMATCH` |
+| العكارة | &lrm;≤ 2.0 NTU | `TURBIDITY_HIGH` |
+| الأس الهيدروجيني | &lrm;6.5 – 8.5 | `PH_OUT_OF_RANGE` |
+| الكلور المتبقي | &lrm;0.2 – 0.5 mg/L | `CHLORINE_OUT_OF_RANGE` |
+| فرق الضغط عبر المرشح (p1 − p2) | &lrm;≤ 0.9 bar | `FILTER_DP_HIGH` |
+| ضغط الخط | &lrm;≤ 5.0 bar | `LINE_PRESSURE_HIGH` |
+| مستوى الخزان المعالج | &lrm;≥ 10% | `TREATED_TANK_LOW` |
+| التدفق والصمام مغلق | &lrm;≤ 0.5 L/min | `VALVE_MISMATCH` |
 | مهلة استقرار الصمام | 5 ثوانٍ | `VALVE_MISMATCH` |
 
 هذه حدود تجريبية للنموذج الأولي. حدود الري النهائية تُعتمد من معايير وزارة البيئة للمياه المعالجة وبمراجعة خبير اشتراطات. قراءة ORP تُعرض وتُسجَّل ولا تدخل القرار، لأنها وحدها لا تثبت تركيز الكلور أو غياب البكتيريا.
@@ -49,3 +51,5 @@
 2. أضف أو عدّل حالة في `core/vectors.json` تغطي الحد الجديد.
 3. ولّد ملفات المتحكم: `python -m core.gen_rules_h`.
 4. شغّل الاختبارات بالطرق الثلاث (انظر [architecture.md](architecture.md)). لا يُدمج التغيير إلا إذا اجتازتها كلها.
+
+</div>
