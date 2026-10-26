@@ -32,7 +32,8 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    target: 'es2022',
+    // Safari 15 onward: syntax newer than that (class static blocks in three.js) is compiled down.
+    target: ['es2021', 'safari15', 'chrome100', 'firefox100', 'edge100'],
     chunkSizeWarningLimit: 1100, // three.js, postprocessing and camera-controls: about 290 kB gzipped
     rollupOptions: { input: { main: page('./web/index.html'), experience: page('./web/experience/index.html') } },
   },

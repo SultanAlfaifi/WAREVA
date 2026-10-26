@@ -1,19 +1,19 @@
-// The live control room: a twin you can break, shown as the 3D unit and as the phone that watches it.
+// The live control room: a twin you can break, shown on the phone and, where the device allows,
+// as the 3D unit. The twin, phone and scenarios never depend on the 3D code.
 import rules from '../../core/rules.json';
 import { FAULTS, Plant } from '../../twin/plant.js';
 import { STRINGS, t } from './i18n.js';
 import { createPhone } from './phone.js';
-import { createViewer, tone } from './scene/viewer.js';
+import { tone } from './tone.js';
 
 const LABELS = ['collect', 'treat', 'store', 'sense', 'gate', 'cabinet', 'lawn'];
 const labelText = lang => Object.fromEntries(LABELS.map(k => [k, STRINGS[lang][`label.${k}`]]));
 
 export function mountControlRoom(root, lang) {
-  const viewer = createViewer(root.querySelector('[data-stage]'), { interactive: true, labels: labelText(lang), lang });
-  viewer.goTo('control', 'control', 0, false);
+  const stage = root.querySelector('[data-stage]');
   const phone = createPhone(root.querySelector('[data-phone]'));
   const plant = new Plant(rules, new Date().toISOString().replace(/\.\d+Z$/, 'Z'));
-  let speed = 1, signature = null, visible = false, snap = plant.snapshot();
+  let speed = 1, signature = null, visible = false, snap = plant.snapshot(), viewer = null;
 
   const faults = root.querySelector('[data-faults]');
   faults.innerHTML = FAULTS.map(f => `<button type="button" class="chip" data-fault="${f}" data-i18n="fault.${f}" aria-pressed="${f === 'none'}">${t(lang, `fault.${f}`)}</button>`).join('');
@@ -32,10 +32,10 @@ export function mountControlRoom(root, lang) {
     speed = Number(b.dataset.speedValue);
     for (const x of b.parentElement.children) x.setAttribute('aria-checked', String(x === b));
   });
-  root.querySelectorAll('[data-zoom]').forEach(b => b.addEventListener('click', () => viewer.zoom(Number(b.dataset.zoom))));
+  root.querySelectorAll('[data-zoom]').forEach(b => b.addEventListener('click', () => viewer?.zoom(Number(b.dataset.zoom))));
 
   function render() {
-    viewer.setSnapshot(snap);
+    viewer?.setSnapshot(snap);
     phone.render(snap, lang);
     reset.disabled = !snap.decision.latched.length;
   }
@@ -53,10 +53,20 @@ export function mountControlRoom(root, lang) {
   step();
 
   return {
+    stage,
+    get has3d() { return Boolean(viewer); },
+    // Create the 3D unit with the factory from scene/viewer.js; called once that code has loaded.
+    attach(createViewer, onLost) {
+      if (viewer) return;
+      viewer = createViewer(stage, { interactive: true, labels: labelText(lang), lang, onLost });
+      viewer.goTo('control', 'control', 0, false);
+      viewer.setSnapshot(snap);
+    },
+    detach() { viewer?.dispose(); viewer = null; },
     setLang(l) {
       lang = l;
-      viewer.setLang(l);
-      viewer.setLabels(labelText(l));
+      viewer?.setLang(l);
+      viewer?.setLabels(labelText(l));
       render();
     },
   };

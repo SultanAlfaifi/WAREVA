@@ -1,11 +1,14 @@
 // Renders the WAREVA unit: studio lighting from RoomEnvironment, bloom only on the glowing parts,
 // eased camera moves (camera-controls) and HTML labels. Rendering pauses while the canvas is off screen.
+// On phones (LOW_POWER) it renders directly with no post-processing, shadows or glass refraction,
+// and callers keep a single viewer alive at a time, so the page stays within the phone's GPU memory.
 import * as THREE from 'three';
 import CameraControls from 'camera-controls';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 import { BloomEffect, EffectComposer, EffectPass, RenderPass, SMAAEffect, ToneMappingEffect, ToneMappingMode, VignetteEffect } from 'postprocessing';
 import rules from '../../../core/rules.json';
+import { LOW_POWER, tone } from '../tone.js';
 import { PALETTE, buildUnit, drawScreen, flowPulses } from './unit.js';
 
 CameraControls.install({ THREE });
@@ -26,20 +29,15 @@ const COLORS = Object.fromEntries(Object.entries(PALETTE).map(([k, v]) => [k, ne
 const GRASS_WET = new THREE.Color('#3fa36b'), GRASS_DRY = new THREE.Color('#2a5c44');
 const QUALITY = new Set(['TURBIDITY_HIGH', 'PH_OUT_OF_RANGE', 'CHLORINE_OUT_OF_RANGE', 'SENSOR_MISSING']);
 
-export function tone(snapshot) {
-  const d = snapshot.decision;
-  if (d.state === 'REUSE') return 'verify';
-  if (d.state === 'HOLD') return d.reasons.some(r => rules.reasons[r.code].severity === 'critical') ? 'danger' : 'hold';
-  return 'idle';
-}
-
-export function createViewer(container, { interactive = false, labels = {}, lang = 'ar' } = {}) {
+export function createViewer(container, { interactive = false, labels = {}, lang = 'ar', onLost } = {}) {
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance', stencil: false });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.toneMapping = THREE.NoToneMapping;
+  const low = LOW_POWER;
+  const glow = low ? 1.15 : 3; // emissive boost; without bloom a smaller boost keeps the hue
+  const renderer = new THREE.WebGLRenderer({ antialias: low, powerPreference: low ? 'default' : 'high-performance', stencil: false });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, low ? 1.5 : 1.75));
+  renderer.shadowMap.enabled = !low;
+  renderer.shadowMap.type = THREE.PCFShadowMap;
+  renderer.toneMapping = low ? THREE.AgXToneMapping : THREE.NoToneMapping;
   renderer.domElement.className = 'stage__canvas';
   container.append(renderer.domElement);
 
@@ -47,11 +45,12 @@ export function createViewer(container, { interactive = false, labels = {}, lang
   scene.background = new THREE.Color('#08121a');
   scene.fog = new THREE.Fog('#08121a', 11, 24);
   const pmrem = new THREE.PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-  scene.environmentIntensity = 0.75;
+  const envTarget = pmrem.fromScene(new RoomEnvironment(), 0.04);
+  scene.environment = envTarget.texture;
+  scene.environmentIntensity = low ? 0.9 : 0.75;
   const key = new THREE.DirectionalLight('#ffffff', 2.4);
   key.position.set(4, 7, 5);
-  key.castShadow = true;
+  key.castShadow = !low;
   key.shadow.mapSize.set(2048, 2048);
   Object.assign(key.shadow.camera, { left: -7, right: 7, top: 5, bottom: -5, near: 1, far: 20 });
   key.shadow.bias = -0.0004;
@@ -66,20 +65,23 @@ export function createViewer(container, { interactive = false, labels = {}, lang
   controls.smoothTime = reduceMotion ? 0 : 0.7;
   controls.draggingSmoothTime = 0.12;
   controls.minDistance = 2.5;
-  controls.maxDistance = 15;
+  controls.maxDistance = 18;
   controls.maxPolarAngle = Math.PI * 0.47;
   controls.mouseButtons.wheel = CameraControls.ACTION.NONE; // the page scrolls; pinch and buttons zoom
   controls.enabled = interactive;
 
-  const composer = new EffectComposer(renderer, { frameBufferType: THREE.HalfFloatType });
-  composer.addPass(new RenderPass(scene, camera));
-  composer.addPass(new EffectPass(camera,
-    new BloomEffect({ mipmapBlur: true, luminanceThreshold: 0.92, luminanceSmoothing: 0.15, intensity: 1.15, radius: 0.72 }),
-    new VignetteEffect({ darkness: 0.5, offset: 0.32 }),
-    new ToneMappingEffect({ mode: ToneMappingMode.AGX }),
-    new SMAAEffect()));
+  let composer = null;
+  if (!low) {
+    composer = new EffectComposer(renderer, { frameBufferType: THREE.HalfFloatType });
+    composer.addPass(new RenderPass(scene, camera));
+    composer.addPass(new EffectPass(camera,
+      new BloomEffect({ mipmapBlur: true, luminanceThreshold: 0.92, luminanceSmoothing: 0.15, intensity: 1.15, radius: 0.72 }),
+      new VignetteEffect({ darkness: 0.5, offset: 0.32 }),
+      new ToneMappingEffect({ mode: ToneMappingMode.AGX }),
+      new SMAAEffect()));
+  }
 
-  const unit = buildUnit();
+  const unit = buildUnit({ low });
   scene.add(unit.root);
   const { parts } = unit;
   const pulses = { treat: flowPulses(parts.paths.treat, parts.M.pulse, 52), reuse: flowPulses(parts.paths.reuse, parts.M.pulse, 30) };
@@ -100,8 +102,8 @@ export function createViewer(container, { interactive = false, labels = {}, lang
     labelEls[name] = el;
   }
 
-  let snap = null, levels = { raw: 0.6, treated: 0.4 }, active = true, frame = 0, side = null, shotDistance = 10;
-  const clock = new THREE.Clock();
+  let snap = null, active = true, frame = 0, side = null, shotDistance = 10, last = performance.now(), disposed = false;
+  const levels = { raw: 0.6, treated: 0.4 };
   // Slide the unit away from the text: sideways on wide screens (side = 1 when text is on the right),
   // upwards on narrow ones where the text sits at the bottom.
   const applyFrame = smooth => {
@@ -111,21 +113,22 @@ export function createViewer(container, { interactive = false, labels = {}, lang
   };
   const fit = () => {
     const { clientWidth: w, clientHeight: h } = container;
-    if (!w || !h) return;
+    if (!w || !h || disposed) return;
     renderer.setSize(w, h, false);
-    composer.setSize(w, h);
+    composer?.setSize(w, h);
     labelRenderer.setSize(w, h);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     applyFrame(false);
   };
-  new ResizeObserver(fit).observe(container);
+  const resizeObserver = new ResizeObserver(fit);
+  resizeObserver.observe(container);
   fit();
 
-  function setLed(mesh, color) { mesh.material.color.copy(COLORS[color]).multiplyScalar(3); }
+  function setLed(mesh, color) { mesh.material.color.copy(COLORS[color]).multiplyScalar(glow); }
 
   function applyState() {
-    if (!snap) return;
+    if (!snap || disposed) return;
     const t = tone(snap), d = snap.decision;
     setLed(parts.valveLed, snap.valve.feedback === 'open' ? 'verify' : t === 'verify' ? 'idle' : t);
     setLed(parts.valveFlag, snap.valve.feedback === 'open' ? 'verify' : t === 'verify' ? 'idle' : t);
@@ -137,7 +140,9 @@ export function createViewer(container, { interactive = false, labels = {}, lang
   }
 
   function tick() {
-    const dt = Math.min(clock.getDelta(), 0.05);
+    const now = performance.now();
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
     controls.update(dt);
     const motion = reduceMotion ? 0 : dt;
     if (snap) {
@@ -153,7 +158,8 @@ export function createViewer(container, { interactive = false, labels = {}, lang
       }
       const wet = f.irrigation > 0;
       parts.grass.color.lerp(wet ? GRASS_WET : GRASS_DRY, Math.min(1, dt * 0.8));
-      const spray = parts.spray, dummy = spray.userData.dummy ??= new THREE.Object3D();
+      const spray = parts.spray;
+      const dummy = spray.userData.dummy || (spray.userData.dummy = new THREE.Object3D());
       spray.visible = wet;
       if (wet) {
         spray.userData.seeds.forEach((s, i) => {
@@ -166,15 +172,28 @@ export function createViewer(container, { interactive = false, labels = {}, lang
         spray.instanceMatrix.needsUpdate = true;
       }
     }
-    composer.render(dt);
+    if (composer) composer.render(dt);
+    else renderer.render(scene, camera);
     labelRenderer.render(scene, camera);
     frame++;
   }
 
-  const loop = () => renderer.setAnimationLoop(active && !document.hidden ? tick : null);
-  new IntersectionObserver(([e]) => { active = e.isIntersecting; clock.getDelta(); loop(); }, { rootMargin: '120px' }).observe(container);
+  const loop = () => {
+    if (disposed) return;
+    last = performance.now();
+    renderer.setAnimationLoop(active && !document.hidden ? tick : null);
+  };
+  const visibility = new IntersectionObserver(([e]) => { active = e.isIntersecting; loop(); }, { rootMargin: '120px' });
+  visibility.observe(container);
   document.addEventListener('visibilitychange', loop);
   document.fonts?.ready.then(applyState);
+
+  // If the browser takes the GPU context away (memory pressure on phones), stop and let the page say so.
+  renderer.domElement.addEventListener('webglcontextlost', e => {
+    e.preventDefault();
+    renderer.setAnimationLoop(null);
+    onLost?.();
+  });
 
   function distanceScale() {
     return camera.aspect < 0.75 ? 2.0 : camera.aspect < 1.15 ? 1.6 : 1;
@@ -187,7 +206,6 @@ export function createViewer(container, { interactive = false, labels = {}, lang
     setLang(l) { lang = l; applyState(); },
     setLabels(map) { for (const [k, v] of Object.entries(map)) if (labelEls[k]) labelEls[k].textContent = v; },
     highlight(name) { for (const [k, el] of Object.entries(labelEls)) el.classList.toggle('is-active', k === name); },
-    showLabels(on) { labelRenderer.domElement.hidden = !on; },
     // Ease the camera to a stop, or between two stops (f in 0..1).
     goTo(a, b = a, f = 0, smooth = true) {
       const pick = n => STOPS[n === 'overview' && side === -1 ? 'overviewLtr' : n];
@@ -201,5 +219,26 @@ export function createViewer(container, { interactive = false, labels = {}, lang
     zoom(step) { controls.dolly(step, true); },
     renderOnce() { for (let i = 0; i < 100; i++) controls.update(0.05); tick(); },
     frame(s) { side = s; applyFrame(true); },
+    // Free the GPU context and memory; the page creates a new viewer when this one is needed again.
+    dispose() {
+      if (disposed) return;
+      disposed = true;
+      renderer.setAnimationLoop(null);
+      visibility.disconnect();
+      resizeObserver.disconnect();
+      document.removeEventListener('visibilitychange', loop);
+      controls.dispose();
+      composer?.dispose();
+      scene.traverse(o => {
+        o.geometry?.dispose();
+        for (const m of [].concat(o.material ?? [])) { m.map?.dispose(); m.dispose(); }
+      });
+      envTarget.dispose();
+      pmrem.dispose();
+      renderer.dispose();
+      renderer.forceContextLoss();
+      renderer.domElement.remove();
+      labelRenderer.domElement.remove();
+    },
   };
 }

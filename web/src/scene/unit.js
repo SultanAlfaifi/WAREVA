@@ -8,7 +8,7 @@ export const PALETTE = {
   ink: '#e5eef2', brand: '#5bb8d1', verify: '#3fd1a8', hold: '#f0b030', danger: '#f07a6e', idle: '#6a8390',
 };
 
-function materials() {
+function materials(low) {
   const m = (opts) => new THREE.MeshPhysicalMaterial(opts);
   return {
     hdpe: m({ color: '#e8edef', roughness: 0.55, clearcoat: 0.2 }),
@@ -21,18 +21,21 @@ function materials() {
     motor: m({ color: '#24343f', metalness: 0.3, roughness: 0.5 }),
     cabinet: m({ color: '#eef2f3', roughness: 0.4, clearcoat: 0.4 }),
     rubber: m({ color: '#0f1418', roughness: 0.9 }),
-    glass: m({ color: '#ffffff', metalness: 0, roughness: 0.04, transmission: 1, thickness: 0.05, ior: 1.45, transparent: true }),
-    water: m({ color: PALETTE.brand, roughness: 0.1, transmission: 0.35, thickness: 0.4, emissive: PALETTE.brand, emissiveIntensity: 0.15 }),
+    // Transmission needs an extra full-screen render pass; phones get plain transparency instead.
+    glass: low ? m({ color: '#dfeaee', roughness: 0.05, transparent: true, opacity: 0.22, depthWrite: false })
+      : m({ color: '#ffffff', metalness: 0, roughness: 0.04, transmission: 1, thickness: 0.05, ior: 1.45, transparent: true }),
+    water: low ? m({ color: PALETTE.brand, roughness: 0.15, emissive: PALETTE.brand, emissiveIntensity: 0.2 })
+      : m({ color: PALETTE.brand, roughness: 0.1, transmission: 0.35, thickness: 0.4, emissive: PALETTE.brand, emissiveIntensity: 0.15 }),
     floor: new THREE.MeshStandardMaterial({ color: '#070e13', roughness: 0.95, metalness: 0, envMapIntensity: 0.25 }),
     grass: new THREE.MeshStandardMaterial({ color: '#2f7a52', roughness: 0.9 }),
     soil: new THREE.MeshStandardMaterial({ color: '#1a2a24', roughness: 1 }),
-    pulse: new THREE.MeshBasicMaterial({ color: new THREE.Color('#9eeeff').multiplyScalar(2.2), toneMapped: false }),
+    pulse: new THREE.MeshBasicMaterial({ color: new THREE.Color('#9eeeff').multiplyScalar(low ? 1.1 : 2.2), toneMapped: false }),
     spray: new THREE.MeshBasicMaterial({ color: new THREE.Color('#bff6ff').multiplyScalar(1.4), toneMapped: false, transparent: true, opacity: 0.85 }),
   };
 }
 
 function led(color) {
-  return new THREE.MeshBasicMaterial({ color: new THREE.Color(color).multiplyScalar(3), toneMapped: false });
+  return new THREE.MeshBasicMaterial({ color: new THREE.Color(color).multiplyScalar(2), toneMapped: false });
 }
 
 const add = (parent, geo, mat, x = 0, y = 0, z = 0) => {
@@ -125,8 +128,8 @@ export function drawScreen(screen, { word, code, color, detail }) {
   screen.texture.needsUpdate = true;
 }
 
-export function buildUnit() {
-  const M = materials();
+export function buildUnit({ low = false } = {}) {
+  const M = materials(low);
   const root = new THREE.Group();
   const parts = {}, anchors = {};
 
@@ -195,7 +198,7 @@ export function buildUnit() {
   const lawn = new THREE.Group(); lawn.position.set(-4.75, 0, 0.3); root.add(lawn);
   add(lawn, new THREE.CylinderGeometry(1.15, 1.2, 0.08, 64), M.soil, 0, 0.04, 0);
   const bladeGeo = new THREE.ConeGeometry(0.012, 0.16, 3); bladeGeo.translate(0, 0.08, 0);
-  const blades = new THREE.InstancedMesh(bladeGeo, M.grass, 1800);
+  const blades = new THREE.InstancedMesh(bladeGeo, M.grass, low ? 700 : 1800);
   const dummy = new THREE.Object3D();
   for (let i = 0; i < blades.count; i++) {
     const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()) * 1.1;
@@ -207,7 +210,7 @@ export function buildUnit() {
   blades.castShadow = blades.receiveShadow = true;
   lawn.add(blades);
   add(lawn, new THREE.CylinderGeometry(0.03, 0.04, 0.22, 12), M.brushed, 0, 0.15, 0);
-  const spray = new THREE.InstancedMesh(new THREE.SphereGeometry(0.014, 6, 4), M.spray, 160);
+  const spray = new THREE.InstancedMesh(new THREE.SphereGeometry(0.014, 6, 4), M.spray, low ? 80 : 160);
   spray.userData.seeds = Array.from({ length: spray.count }, () => ({ a: Math.random() * Math.PI * 2, t: Math.random(), v: 0.7 + Math.random() * 0.5 }));
   spray.castShadow = false;
   lawn.add(spray);

@@ -26,7 +26,7 @@
     <!-- The story: one sticky 3D stage; scrolling moves the camera from chapter to chapter. -->
     <section class="story" id="system" data-story>
       <div class="story__sticky">
-        <div class="stage stage--story" data-story-stage aria-hidden="true"></div>
+        <div class="stage stage--story" data-story-stage><p class="stage__fallback" data-i18n="stage.no3d"></p></div>
         <div class="story__shade" aria-hidden="true"></div>
 
         <div class="panel panel--hero is-active" data-chapter="overview">
@@ -84,7 +84,7 @@
         </header>
         <div class="control__grid">
           <div class="control__unit">
-            <div class="stage stage--control" data-stage></div>
+            <div class="stage stage--control" data-stage><p class="stage__fallback" data-i18n="stage.no3d"></p></div>
             <div class="stage__tools">
               <span class="stage__hint" data-i18n="cr.drag">اسحب لتدوير الوحدة</span>
               <span class="stage__zoom">

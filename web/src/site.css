@@ -48,6 +48,18 @@ a { color: inherit; }
 /* CSS2DRenderer positions labels from the top-left corner, so this layer must stay LTR. */
 .stage__labels { position: absolute; inset: 0; pointer-events: none; direction: ltr; overflow: hidden; }
 [dir="rtl"] .hotspot { direction: rtl; }
+/* Shown where the 3D cannot run or the browser took its GPU context away. */
+.stage__fallback { display: none; }
+.no-3d .stage__fallback, .stage.is-lost .stage__fallback {
+  position: absolute; inset: 0; margin: 0; padding: 24px;
+  display: grid; place-content: center; justify-items: center; gap: var(--space-4);
+  text-align: center; font: 400 14px/1.7 var(--font-sans); color: var(--ink-muted);
+  background: radial-gradient(ellipse 60% 45% at 50% 40%, color-mix(in srgb, var(--brand) 16%, transparent), transparent 70%);
+}
+.no-3d .stage__fallback::before, .stage.is-lost .stage__fallback::before {
+  content: ""; width: 72px; height: 72px; background: url('../../brand/logos/wareva-mark-white.svg') center / contain no-repeat;
+}
+.stage.is-lost .stage__canvas, .stage.is-lost .stage__labels { display: none; }
 .hotspot {
   padding: 5px 12px; border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--surface-000) 88%, transparent); border: 1px solid var(--line-strong);
