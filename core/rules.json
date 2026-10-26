@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "description": "WAREVA irrigation safety rules. The only place limits and reason codes are defined. Python, JavaScript and the ESP32 firmware all read this file (firmware through the generated rules.h).",
+  "limits": {
+    "turbidity_max_ntu": 2.0,
+    "ph_min": 6.5,
+    "ph_max": 8.5,
+    "chlorine_min_mg_l": 0.2,
+    "chlorine_max_mg_l": 0.5,
+    "filter_dp_max_bar": 0.9,
+    "line_pressure_max_bar": 5.0,
+    "treated_level_min_percent": 10.0,
+    "closed_flow_max_lpm": 0.5,
+    "valve_settle_s": 5.0
+  },
+  "required_sensors": ["turbidity", "ph", "chlorine", "p1", "p2", "treated_level_percent", "flow_lpm"],
+  "sensors": {
+    "turbidity": { "ar": "العكارة", "en": "Turbidity", "unit": "NTU" },
+    "ph": { "ar": "الأس الهيدروجيني", "en": "pH", "unit": "" },
+    "chlorine": { "ar": "الكلور المتبقي", "en": "Residual chlorine", "unit": "mg/L" },
+    "orp": { "ar": "جهد الأكسدة ORP", "en": "ORP", "unit": "mV" },
+    "p1": { "ar": "الضغط قبل المرشح", "en": "Pressure before filter", "unit": "bar" },
+    "p2": { "ar": "الضغط بعد المرشح", "en": "Pressure after filter", "unit": "bar" },
+    "treated_level_percent": { "ar": "مستوى الخزان المعالج", "en": "Treated tank level", "unit": "%" },
+    "flow_lpm": { "ar": "تدفق الري", "en": "Irrigation flow", "unit": "L/min" },
+    "valve_position": { "ar": "موضع صمام الري", "en": "Irrigation valve position", "unit": "" }
+  },
+  "reasons": {
+    "POWER_LOSS": { "severity": "critical", "ar": "انقطاع الكهرباء؛ المضخات متوقفة وصمام الري مغلق.", "en": "Power lost; pumps stopped and irrigation valve closed." },
+    "MANUAL_HOLD": { "severity": "info", "ar": "إيقاف يدوي من المشغّل؛ الري متوقف.", "en": "Manual hold by the operator; irrigation stopped." },
+    "VALVE_MISMATCH": { "severity": "critical", "ar": "موضع صمام الري أو تدفقه لا يطابق الأمر؛ الري متوقف حتى يفحصه فني ويعيد الضبط.", "en": "Irrigation valve position or flow does not match the command; irrigation stopped until a technician resets it." },
+    "STANDBY_MODE": { "severity": "info", "ar": "وضع الاستعداد؛ لا معالجة ولا ري.", "en": "Standby; no treatment and no irrigation." },
+    "BACKWASH_MODE": { "severity": "info", "ar": "غسيل عكسي للمرشح من الخزان المعالج؛ الري مغلق.", "en": "Filter backwash from the treated tank; irrigation closed." },
+    "TREATED_TANK_LOW": { "severity": "warning", "ar": "مستوى الخزان المعالج {value}% أقل من {limit}%؛ لا ري ولا غسيل.", "en": "Treated tank at {value}%, below {limit}%; no irrigation or backwash." },
+    "SENSOR_MISSING": { "severity": "critical", "ar": "لا توجد قراءة من حساس {sensor}؛ الري متوقف.", "en": "No reading from the {sensor} sensor; irrigation stopped." },
+    "TURBIDITY_HIGH": { "severity": "warning", "ar": "العكارة {value} NTU تتجاوز الحد {limit} NTU؛ الري متوقف والماء محتجز.", "en": "Turbidity {value} NTU exceeds {limit} NTU; irrigation stopped, water held." },
+    "PH_OUT_OF_RANGE": { "severity": "warning", "ar": "الأس الهيدروجيني {value} خارج النطاق {limit}؛ الري متوقف.", "en": "pH {value} outside {limit}; irrigation stopped." },
+    "CHLORINE_OUT_OF_RANGE": { "severity": "warning", "ar": "الكلور المتبقي {value} mg/L خارج النطاق {limit} mg/L؛ الري متوقف.", "en": "Residual chlorine {value} mg/L outside {limit} mg/L; irrigation stopped." },
+    "FILTER_DP_HIGH": { "severity": "warning", "ar": "فرق الضغط عبر المرشح {value} bar يتجاوز {limit} bar؛ المرشح يحتاج غسيلًا.", "en": "Filter pressure drop {value} bar exceeds {limit} bar; filter needs backwash." },
+    "LINE_PRESSURE_HIGH": { "severity": "critical", "ar": "ضغط الخط {value} bar يتجاوز {limit} bar؛ الري متوقف.", "en": "Line pressure {value} bar exceeds {limit} bar; irrigation stopped." }
+  },
+  "states": {
+    "REUSE": { "ar": "يُسمح بالري", "en": "Irrigation allowed" },
+    "HOLD": { "ar": "محتجز", "en": "Held" },
+    "STANDBY": { "ar": "استعداد", "en": "Standby" },
+    "BACKWASH": { "ar": "غسيل عكسي", "en": "Backwash" }
+  }
+}

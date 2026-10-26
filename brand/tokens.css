@@ -1,0 +1,120 @@
+/* WAREVA — generated from tokens.json. Edit the tokens, not this file. */
+
+@font-face { font-family: "Alexandria"; src: url("fonts/Alexandria-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Readex Pro"; src: url("fonts/ReadexPro-Variable.woff2") format("woff2"); font-weight: 160 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("fonts/IBMPlexMono-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("fonts/IBMPlexMono-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+
+:root {
+  --surface-000: #ffffff;
+  --surface-100: #f1f4f5;
+  --surface-200: #e2e8eb;
+  --line: #cdd6db;
+  --line-strong: #6f828d;
+  --ink: #0d1e29;
+  --ink-muted: #475a66;
+  --brand: #0b5b72;
+  --brand-strong: #08455a;
+  --on-brand: #ffffff;
+  --brand-tint: #d6eaf0;
+  --verify: #009e78;
+  --status-reuse: #006b52;
+  --on-status-reuse: #ffffff;
+  --status-hold: #f0b030;
+  --on-status-hold: #1f1300;
+  --status-hold-edge: #a86d00;
+  --status-standby: #5f6f78;
+  --on-status-standby: #ffffff;
+  --status-backwash: #3d5bb5;
+  --on-status-backwash: #ffffff;
+  --danger: #b42318;
+  --on-danger: #ffffff;
+  --focus: #0b5b72;
+  --shadow-raised: 0 1px 2px rgba(13, 30, 41, 0.08), 0 6px 16px rgba(13, 30, 41, 0.06);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 16px;
+  --radius-pill: 999px;
+  --font-display: "Alexandria", "Readex Pro", system-ui, sans-serif;
+  --font-sans: "Readex Pro", "Segoe UI", Tahoma, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface-000: #13232d;
+    --surface-100: #0c1921;
+    --surface-200: #08121a;
+    --line: #22363f;
+    --line-strong: #6a8390;
+    --ink: #e5eef2;
+    --ink-muted: #9cb0ba;
+    --brand: #5bb8d1;
+    --brand-strong: #8fd0e2;
+    --on-brand: #04212b;
+    --brand-tint: #12384a;
+    --verify: #3fd1a8;
+    --status-reuse: #3fd1a8;
+    --on-status-reuse: #002a1f;
+    --status-hold: #f0b030;
+    --on-status-hold: #1f1300;
+    --status-hold-edge: #f0b030;
+    --status-standby: #8a9ba4;
+    --on-status-standby: #0c1921;
+    --status-backwash: #8da2ec;
+    --on-status-backwash: #0c1921;
+    --danger: #f07a6e;
+    --on-danger: #2a0603;
+    --focus: #8fd0e2;
+    --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --surface-000: #13232d;
+  --surface-100: #0c1921;
+  --surface-200: #08121a;
+  --line: #22363f;
+  --line-strong: #6a8390;
+  --ink: #e5eef2;
+  --ink-muted: #9cb0ba;
+  --brand: #5bb8d1;
+  --brand-strong: #8fd0e2;
+  --on-brand: #04212b;
+  --brand-tint: #12384a;
+  --verify: #3fd1a8;
+  --status-reuse: #3fd1a8;
+  --on-status-reuse: #002a1f;
+  --status-hold: #f0b030;
+  --on-status-hold: #1f1300;
+  --status-hold-edge: #f0b030;
+  --status-standby: #8a9ba4;
+  --on-status-standby: #0c1921;
+  --status-backwash: #8da2ec;
+  --on-status-backwash: #0c1921;
+  --danger: #f07a6e;
+  --on-danger: #2a0603;
+  --focus: #8fd0e2;
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+.display-xl { font: 700 56px/1.1 var(--font-display); }
+.display-l { font: 700 40px/1.15 var(--font-display); }
+.heading { font: 600 28px/1.25 var(--font-display); }
+.title { font: 600 20px/1.35 var(--font-display); }
+.body-l { font: 400 18px/1.75 var(--font-sans); }
+.body { font: 400 16px/1.7 var(--font-sans); }
+.body-s { font: 400 14px/1.6 var(--font-sans); }
+.label { font: 500 13px/1.4 var(--font-sans); letter-spacing: 0.01em; }
+.reading { font: 500 32px/1.1 var(--font-mono); }
+.code { font: 400 13px/1.5 var(--font-mono); }

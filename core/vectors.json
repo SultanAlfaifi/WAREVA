@@ -1,0 +1,102 @@
+{
+  "description": "Shared test cases for every SafetyController implementation (Python, JavaScript, ESP32). Each case runs its steps on a fresh controller. A step's `in` overrides `defaults` (readings merge key by key). `codes` lists reasons in order; SENSOR_MISSING is written CODE:sensor.",
+  "defaults": {
+    "dt_s": 1,
+    "power": true,
+    "manual_hold": false,
+    "mode": "auto",
+    "reset": false,
+    "valve_feedback": "closed",
+    "readings": { "turbidity": 0.7, "ph": 7.2, "chlorine": 0.35, "orp": 680, "p1": 2.8, "p2": 2.55, "treated_level_percent": 40, "flow_lpm": 0 }
+  },
+  "cases": [
+    { "name": "all readings within limits", "steps": [{ "in": {}, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } }] },
+    { "name": "turbidity exactly at the limit", "steps": [{ "in": { "readings": { "turbidity": 2.0 } }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } }] },
+    { "name": "turbidity just above the limit", "steps": [{ "in": { "readings": { "turbidity": 2.01 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["TURBIDITY_HIGH"] } }] },
+    { "name": "turbidity contamination", "steps": [{ "in": { "readings": { "turbidity": 8.14 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["TURBIDITY_HIGH"] } }] },
+    { "name": "pH at lower limit", "steps": [{ "in": { "readings": { "ph": 6.5 } }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } }] },
+    { "name": "pH below range", "steps": [{ "in": { "readings": { "ph": 6.49 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["PH_OUT_OF_RANGE"] } }] },
+    { "name": "pH above range", "steps": [{ "in": { "readings": { "ph": 8.51 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["PH_OUT_OF_RANGE"] } }] },
+    { "name": "chlorine at lower limit", "steps": [{ "in": { "readings": { "chlorine": 0.2 } }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } }] },
+    { "name": "chlorine at upper limit", "steps": [{ "in": { "readings": { "chlorine": 0.5 } }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } }] },
+    { "name": "chlorine lost", "steps": [{ "in": { "readings": { "chlorine": 0.19 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["CHLORINE_OUT_OF_RANGE"] } }] },
+    { "name": "chlorine overdosed", "steps": [{ "in": { "readings": { "chlorine": 0.51 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["CHLORINE_OUT_OF_RANGE"] } }] },
+    { "name": "chlorine sensor dropout", "steps": [{ "in": { "readings": { "chlorine": null } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["SENSOR_MISSING:chlorine"] } }] },
+    { "name": "turbidity sensor dropout", "steps": [{ "in": { "readings": { "turbidity": null } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["SENSOR_MISSING:turbidity"] } }] },
+    { "name": "flow sensor dropout", "steps": [{ "in": { "readings": { "flow_lpm": null } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["SENSOR_MISSING:flow_lpm"] } }] },
+    { "name": "valve position unknown", "steps": [{ "in": { "valve_feedback": null }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["SENSOR_MISSING:valve_position"] } }] },
+    { "name": "ORP missing does not block (display only)", "steps": [{ "in": { "readings": { "orp": null } }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } }] },
+    { "name": "filter pressure drop acceptable", "steps": [{ "in": { "readings": { "p1": 2.8, "p2": 1.95 } }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } }] },
+    { "name": "clogged filter", "steps": [{ "in": { "readings": { "p1": 2.9, "p2": 1.5 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["FILTER_DP_HIGH"] } }] },
+    { "name": "line overpressure", "steps": [{ "in": { "readings": { "p1": 5.2, "p2": 4.9 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["LINE_PRESSURE_HIGH"] } }] },
+    { "name": "treated tank at minimum level", "steps": [{ "in": { "readings": { "treated_level_percent": 10 } }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } }] },
+    { "name": "treated tank too low", "steps": [{ "in": { "readings": { "treated_level_percent": 9.9 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["TREATED_TANK_LOW"] } }] },
+    { "name": "several faults reported in fixed order", "steps": [{ "in": { "readings": { "turbidity": 8, "chlorine": null, "p1": 2.9, "p2": 1.5 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["SENSOR_MISSING:chlorine", "TURBIDITY_HIGH", "FILTER_DP_HIGH"] } }] },
+    { "name": "power loss hides sensor checks", "steps": [{ "in": { "power": false, "readings": { "turbidity": 9, "chlorine": null } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["POWER_LOSS"] } }] },
+    { "name": "manual hold", "steps": [{ "in": { "manual_hold": true }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["MANUAL_HOLD"] } }] },
+    { "name": "power loss and manual hold together", "steps": [{ "in": { "power": false, "manual_hold": true }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["POWER_LOSS", "MANUAL_HOLD"] } }] },
+    { "name": "standby", "steps": [{ "in": { "mode": "standby" }, "expect": { "state": "STANDBY", "valve_command": "closed", "codes": ["STANDBY_MODE"] } }] },
+    { "name": "backwash", "steps": [{ "in": { "mode": "backwash" }, "expect": { "state": "BACKWASH", "valve_command": "closed", "codes": ["BACKWASH_MODE"] } }] },
+    { "name": "backwash refused with low treated tank", "steps": [{ "in": { "mode": "backwash", "readings": { "treated_level_percent": 5 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["TREATED_TANK_LOW"] } }] },
+    {
+      "name": "valve opens normally within settle time",
+      "steps": [
+        { "in": { "dt_s": 1, "valve_feedback": "closed" }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } },
+        { "in": { "dt_s": 5, "valve_feedback": "open" }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } },
+        { "in": { "dt_s": 60, "valve_feedback": "open", "readings": { "flow_lpm": 16.7 } }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } }
+      ]
+    },
+    {
+      "name": "valve stuck closed latches until reset",
+      "steps": [
+        { "in": { "dt_s": 1, "valve_feedback": "closed" }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } },
+        { "in": { "dt_s": 2, "valve_feedback": "closed" }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } },
+        { "in": { "dt_s": 3, "valve_feedback": "closed" }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["VALVE_MISMATCH"], "latched": ["VALVE_MISMATCH"] } },
+        { "in": { "dt_s": 10, "valve_feedback": "closed" }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["VALVE_MISMATCH"] } },
+        { "in": { "dt_s": 1, "valve_feedback": "closed", "reset": true }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [], "latched": [] } }
+      ]
+    },
+    {
+      "name": "valve stuck open while water is held",
+      "steps": [
+        { "in": { "dt_s": 1, "valve_feedback": "open", "readings": { "turbidity": 8 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["TURBIDITY_HIGH"] } },
+        { "in": { "dt_s": 5, "valve_feedback": "open", "readings": { "turbidity": 8 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["VALVE_MISMATCH", "TURBIDITY_HIGH"] } }
+      ]
+    },
+    {
+      "name": "water flowing through a closed valve",
+      "steps": [
+        { "in": { "dt_s": 6, "readings": { "turbidity": 8, "flow_lpm": 3.0 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["VALVE_MISMATCH", "TURBIDITY_HIGH"] } }
+      ]
+    },
+    {
+      "name": "small residual flow through a closed valve is tolerated",
+      "steps": [
+        { "in": { "dt_s": 6, "readings": { "turbidity": 8, "flow_lpm": 0.4 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["TURBIDITY_HIGH"] } }
+      ]
+    },
+    {
+      "name": "power loss closes the valve without latching a mismatch",
+      "steps": [
+        { "in": { "dt_s": 1, "valve_feedback": "closed" }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } },
+        { "in": { "dt_s": 10, "valve_feedback": "open" }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } },
+        { "in": { "dt_s": 30, "power": false, "valve_feedback": "closed" }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["POWER_LOSS"], "latched": [] } },
+        { "in": { "dt_s": 2, "valve_feedback": "closed" }, "expect": { "state": "REUSE", "valve_command": "open", "codes": [] } }
+      ]
+    },
+    {
+      "name": "reset does not override a live fault",
+      "steps": [
+        { "in": { "dt_s": 6, "readings": { "flow_lpm": 3.0 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["VALVE_MISMATCH"] } },
+        { "in": { "dt_s": 1, "reset": true, "readings": { "turbidity": 5 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["TURBIDITY_HIGH"], "latched": [] } }
+      ]
+    },
+    {
+      "name": "manual hold during a latched fault keeps both",
+      "steps": [
+        { "in": { "dt_s": 6, "readings": { "flow_lpm": 3.0 } }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["VALVE_MISMATCH"] } },
+        { "in": { "dt_s": 1, "manual_hold": true }, "expect": { "state": "HOLD", "valve_command": "closed", "codes": ["MANUAL_HOLD", "VALVE_MISMATCH"] } }
+      ]
+    }
+  ]
+}

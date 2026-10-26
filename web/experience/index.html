@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>WAREVA · التوأم الرقمي</title>
+  <meta name="description" content="جرّب متحكم الأمان في واريفا: محطة افتراضية في المتصفح، وأعطال تختبر بها قرار الري أو الاحتجاز.">
+  <link rel="icon" href="../../brand/logos/wareva-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../src/site.css">
+  <link rel="stylesheet" href="../src/experience.css">
+  <script type="module" src="../src/experience.js"></script>
+</head>
+<body class="xp">
+  <header class="xp__bar">
+    <a href="../" aria-label="العودة إلى صفحة واريفا"><picture>
+      <source srcset="../../brand/logos/wareva-lockup-white.svg" media="(prefers-color-scheme: dark)">
+      <img src="../../brand/logos/wareva-lockup.svg" alt="WAREVA · واريفا" width="123" height="32">
+    </picture></a>
+    <span class="xp__tag">محاكاة في المتصفح بنفس قواعد متحكم الأمان</span>
+  </header>
+
+  <div class="xp__stage" id="stage" aria-hidden="true"></div>
+  <p class="xp__fallback" id="fallback" hidden>تعذر عرض المجسم ثلاثي الأبعاد على هذا الجهاز. المحاكاة والقرارات تعمل في اللوحة.</p>
+
+  <aside class="xp__panel" aria-label="حالة المحطة والتحكم">
+    <div id="status"></div>
+    <ul class="wv-reasons" id="reasons"></ul>
+    <dl class="xp__readings" id="readings"></dl>
+    <div id="valve"></div>
+    <h2 class="label">جرّب حالة</h2>
+    <div class="chips" id="faults"></div>
+    <div class="xp__row">
+      <div class="seg" role="radiogroup" aria-label="سرعة المحاكاة" id="speed">
+        <button type="button" role="radio" data-speed="1">×1</button>
+        <button type="button" role="radio" data-speed="10">×10</button>
+        <button type="button" role="radio" data-speed="60">×60</button>
+      </div>
+      <button type="button" class="wv-btn wv-btn--primary" id="reset" disabled>إعادة الضبط بعد الفحص</button>
+    </div>
+    <p class="xp__note" id="clock"></p>
+  </aside>
+</body>
+</html>

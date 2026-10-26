@@ -1,0 +1,13 @@
+node_modules/
+web/dist/
+__pycache__/
+*.pyc
+.venv/
+*.db
+*.db-journal
+.pio/
+firmware/esp32/test_safety
+firmware/esp32/test_safety.exe
+.DS_Store
+Thumbs.db
+.claude/

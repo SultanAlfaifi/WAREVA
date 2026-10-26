@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  software:
+    name: Safety rules, twin, dashboard, gateway, site
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Firmware rules match core/rules.json
+        run: python -m core.gen_rules_h --check
+      - name: Python (core, twin, dashboard, gateway)
+        run: python -B -m unittest discover -s . -p 'test_*.py'
+      - name: Safety rules in C++ (same vectors)
+        run: |
+          g++ -std=c++17 -Wall -Wextra -Ifirmware/esp32/include -Ifirmware/esp32/test \
+            firmware/esp32/test/test_safety.cpp -o test_safety
+          ./test_safety
+      - run: npm ci
+      - name: JavaScript (core, browser twin)
+        run: npm test
+      - name: Website build
+        run: npm run build
+
+  firmware:
+    name: ESP32 build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - run: pip install platformio==6.1.16
+      - run: pio run -d firmware/esp32
+
+  research:
+    name: Research unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: research
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: python -B -m unittest discover -s tests

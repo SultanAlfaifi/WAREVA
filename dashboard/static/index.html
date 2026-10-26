@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>WAREVA · لوحة المتابعة</title>
+  <link rel="icon" href="/brand/logos/wareva-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/brand/tokens.css">
+  <link rel="stylesheet" href="/brand/components.css">
+  <link rel="stylesheet" href="/static/dashboard.css">
+  <script type="module" src="/static/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <picture class="topbar__logo">
+      <source srcset="/brand/logos/wareva-lockup-white.svg" media="(prefers-color-scheme: dark)">
+      <img src="/brand/logos/wareva-lockup.svg" alt="WAREVA · واريفا" height="44">
+    </picture>
+    <div class="topbar__meta">
+      <div class="seg" role="radiogroup" aria-label="مصدر البيانات" id="source">
+        <button type="button" role="radio" data-source="twin">التوأم الرقمي</button>
+        <button type="button" role="radio" data-source="device">الجهاز</button>
+      </div>
+      <p class="topbar__clock" id="clock" aria-live="polite">—</p>
+    </div>
+  </header>
+
+  <main class="app">
+    <p class="notice" id="notice" hidden></p>
+
+    <section class="hero" aria-labelledby="status-title">
+      <div class="hero__status">
+        <h1 class="visually-hidden" id="status-title">حالة المحطة الآن</h1>
+        <div id="status"></div>
+        <ul class="wv-reasons" id="reasons"></ul>
+      </div>
+      <div class="hero__valve" id="valve"></div>
+    </section>
+
+    <section aria-labelledby="readings-title">
+      <h2 class="section-title" id="readings-title">القراءات</h2>
+      <div class="sensors" id="sensors"></div>
+    </section>
+
+    <section class="split">
+      <div class="panel" aria-labelledby="water-title">
+        <h2 class="section-title" id="water-title">الماء</h2>
+        <div class="tanks" id="tanks"></div>
+        <dl class="totals" id="totals"></dl>
+      </div>
+
+      <div class="panel" id="controls" aria-labelledby="controls-title">
+        <h2 class="section-title" id="controls-title">تجربة التوأم الرقمي</h2>
+        <p class="hint">اختر حالة لتختبر استجابة متحكم الأمان. القراءات هنا محاكاة.</p>
+        <h3 class="label">الحالة المختبرة</h3>
+        <div class="chips" id="faults"></div>
+        <h3 class="label">وضع التشغيل</h3>
+        <div class="seg" role="radiogroup" aria-label="وضع التشغيل" id="mode">
+          <button type="button" role="radio" data-mode="auto">تلقائي</button>
+          <button type="button" role="radio" data-mode="standby">استعداد</button>
+          <button type="button" role="radio" data-mode="backwash">غسيل عكسي</button>
+        </div>
+        <h3 class="label">سرعة المحاكاة</h3>
+        <div class="seg" role="radiogroup" aria-label="سرعة المحاكاة" id="speed">
+          <button type="button" role="radio" data-speed="1">×1</button>
+          <button type="button" role="radio" data-speed="10">×10</button>
+          <button type="button" role="radio" data-speed="60">×60</button>
+        </div>
+        <div class="actions">
+          <button type="button" class="wv-btn wv-btn--secondary" id="run"></button>
+          <button type="button" class="wv-btn wv-btn--danger" id="hold"></button>
+          <button type="button" class="wv-btn wv-btn--primary" id="reset" disabled>إعادة الضبط بعد الفحص</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="log-title">
+      <div class="panel__head">
+        <h2 class="section-title" id="log-title">سجل الأحداث</h2>
+        <div class="actions">
+          <a class="wv-btn wv-btn--secondary" href="/api/export/readings.csv" download>تصدير القراءات CSV</a>
+          <a class="wv-btn wv-btn--secondary" href="/api/export/events.csv" download>تصدير الأحداث CSV</a>
+        </div>
+      </div>
+      <ul class="wv-events" id="events"></ul>
+    </section>
+  </main>
+</body>
+</html>

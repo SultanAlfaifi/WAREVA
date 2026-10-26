@@ -1,0 +1,244 @@
+[
+ {
+  "state": "REUSE",
+  "codes": [],
+  "valve": "open",
+  "raw_l": 3000.0,
+  "treated_l": 2000.0,
+  "irrigated_l": 8.333333
+ },
+ {
+  "state": "REUSE",
+  "codes": [],
+  "valve": "open",
+  "raw_l": 3000.0,
+  "treated_l": 2000.0,
+  "irrigated_l": 16.666667
+ },
+ {
+  "state": "REUSE",
+  "codes": [],
+  "valve": "open",
+  "raw_l": 3000.0,
+  "treated_l": 2000.0,
+  "irrigated_l": 25.0
+ },
+ {
+  "state": "REUSE",
+  "codes": [],
+  "valve": "open",
+  "raw_l": 3000.0,
+  "treated_l": 2000.0,
+  "irrigated_l": 33.333333
+ },
+ {
+  "state": "HOLD",
+  "codes": [
+   "TURBIDITY_HIGH"
+  ],
+  "valve": "closed",
+  "raw_l": 3000.0,
+  "treated_l": 2002.777778,
+  "irrigated_l": 33.333333
+ },
+ {
+  "state": "HOLD",
+  "codes": [
+   "TURBIDITY_HIGH"
+  ],
+  "valve": "closed",
+  "raw_l": 3000.0,
+  "treated_l": 2005.555556,
+  "irrigated_l": 33.333333
+ },
+ {
+  "state": "HOLD",
+  "codes": [
+   "TURBIDITY_HIGH"
+  ],
+  "valve": "closed",
+  "raw_l": 3000.0,
+  "treated_l": 2008.333333,
+  "irrigated_l": 33.333333
+ },
+ {
+  "state": "HOLD",
+  "codes": [
+   "TURBIDITY_HIGH"
+  ],
+  "valve": "closed",
+  "raw_l": 3000.0,
+  "treated_l": 2011.111111,
+  "irrigated_l": 33.333333
+ },
+ {
+  "state": "REUSE",
+  "codes": [],
+  "valve": "open",
+  "raw_l": 3000.0,
+  "treated_l": 2011.111111,
+  "irrigated_l": 36.111111
+ },
+ {
+  "state": "REUSE",
+  "codes": [],
+  "valve": "open",
+  "raw_l": 3000.0,
+  "treated_l": 2011.111111,
+  "irrigated_l": 38.888889
+ },
+ {
+  "state": "REUSE",
+  "codes": [],
+  "valve": "open",
+  "raw_l": 3000.0,
+  "treated_l": 2011.111111,
+  "irrigated_l": 41.666667
+ },
+ {
+  "state": "REUSE",
+  "codes": [],
+  "valve": "closed",
+  "raw_l": 3000.0,
+  "treated_l": 2012.5,
+  "irrigated_l": 41.666667
+ },
+ {
+  "state": "HOLD",
+  "codes": [
+   "VALVE_MISMATCH"
+  ],
+  "valve": "closed",
+  "raw_l": 3000.0,
+  "treated_l": 2013.888889,
+  "irrigated_l": 41.666667
+ },
+ {
+  "state": "HOLD",
+  "codes": [
+   "VALVE_MISMATCH"
+  ],
+  "valve": "closed",
+  "raw_l": 3000.0,
+  "treated_l": 2015.277778,
+  "irrigated_l": 41.666667
+ },
+ {
+  "state": "HOLD",
+  "codes": [
+   "VALVE_MISMATCH"
+  ],
+  "valve": "closed",
+  "raw_l": 3000.0,
+  "treated_l": 2016.666667,
+  "irrigated_l": 41.666667
+ },
+ {
+  "state": "REUSE",
+  "codes": [],
+  "valve": "open",
+  "raw_l": 3000.0,
+  "treated_l": 2016.666667,
+  "irrigated_l": 43.055556
+ },
+ {
+  "state": "REUSE",
+  "codes": [],
+  "valve": "open",
+  "raw_l": 3000.0,
+  "treated_l": 2016.666667,
+  "irrigated_l": 44.444444
+ },
+ {
+  "state": "REUSE",
+  "codes": [],
+  "valve": "open",
+  "raw_l": 3000.0,
+  "treated_l": 2016.666667,
+  "irrigated_l": 45.833333
+ },
+ {
+  "state": "HOLD",
+  "codes": [
+   "POWER_LOSS"
+  ],
+  "valve": "closed",
+  "raw_l": 3005.555556,
+  "treated_l": 2016.666667,
+  "irrigated_l": 45.833333
+ },
+ {
+  "state": "REUSE",
+  "codes": [],
+  "valve": "open",
+  "raw_l": 3005.555556,
+  "treated_l": 2016.666667,
+  "irrigated_l": 51.388889
+ },
+ {
+  "state": "BACKWASH",
+  "codes": [
+   "BACKWASH_MODE"
+  ],
+  "valve": "closed",
+  "raw_l": 3022.222222,
+  "treated_l": 1951.666667,
+  "irrigated_l": 51.388889
+ },
+ {
+  "state": "REUSE",
+  "codes": [],
+  "valve": "open",
+  "raw_l": 3022.222222,
+  "treated_l": 1951.666667,
+  "irrigated_l": 68.055556
+ },
+ {
+  "state": "HOLD",
+  "codes": [
+   "FILTER_DP_HIGH"
+  ],
+  "valve": "closed",
+  "raw_l": 3022.222222,
+  "treated_l": 1960.0,
+  "irrigated_l": 68.055556
+ },
+ {
+  "state": "HOLD",
+  "codes": [
+   "SENSOR_MISSING"
+  ],
+  "valve": "closed",
+  "raw_l": 3022.222222,
+  "treated_l": 1968.333333,
+  "irrigated_l": 68.055556
+ },
+ {
+  "state": "HOLD",
+  "codes": [
+   "MANUAL_HOLD"
+  ],
+  "valve": "closed",
+  "raw_l": 3030.555556,
+  "treated_l": 1968.333333,
+  "irrigated_l": 68.055556
+ },
+ {
+  "state": "HOLD",
+  "codes": [
+   "SENSOR_MISSING"
+  ],
+  "valve": "closed",
+  "raw_l": 3030.555556,
+  "treated_l": 1976.666667,
+  "irrigated_l": 68.055556
+ },
+ {
+  "state": "REUSE",
+  "codes": [],
+  "valve": "open",
+  "raw_l": 3030.555556,
+  "treated_l": 1976.666667,
+  "irrigated_l": 76.388889
+ }
+]

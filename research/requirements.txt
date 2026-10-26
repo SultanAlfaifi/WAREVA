@@ -1,0 +1,8 @@
+# Installed and tested here on Python 3.14 (Windows). These releases need Python >= 3.12.
+numpy==2.5.4; python_version >= "3.12"
+pandas==3.1.0; python_version >= "3.12"
+scikit-learn==1.9.1; python_version >= "3.12"
+# Installed and tested here on Python 3.11. These releases also support Python 3.10.
+numpy==2.2.6; python_version < "3.12"
+pandas==2.3.3; python_version < "3.12"
+scikit-learn==1.7.2; python_version < "3.12"
